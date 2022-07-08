@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const CLIENT_URL = "https://technetic.vercel.app"
+const CLIENT_URL = "http://localhost:3000/";
 
 
 exports.loginSuccess = async (req, res, next) => {
