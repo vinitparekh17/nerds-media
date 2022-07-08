@@ -42,7 +42,7 @@ require("dotenv").config()
 // cors stands for Cross Origin Resource Locator
 app.use(
     cors({
-        origin: "http://localhost:3000" || "https://technetic.vercel.app/",
+        origin: "https://technetic.vercel.app/",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
