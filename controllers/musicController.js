@@ -1,4 +1,4 @@
-const Music = require('../models/MusicModel');
+const Music = require('../models/musicModel');
 
 exports.getMusic = (req, res, next) => {
     Music.find({})
