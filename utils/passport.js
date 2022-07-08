@@ -22,11 +22,7 @@ passport.deserializeUser((id, done) => {
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-<<<<<<< HEAD
     callbackURL:  process.env.G_CALLBACK || 'http://localhost:3001/api/google/callback'
-=======
-    callbackURL: 'https://bot02a.herokuapp.com/api/google/callback'
->>>>>>> ab3c8b9ccf91b986f74bc55933fbb75309f68368
 },
     (accessToken, refreshToken, profile, next) => {
         User.findOne({ email: profile._json.email })
@@ -57,11 +53,7 @@ passport.use(new GoogleStrategy({
 passport.use(new GithubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-<<<<<<< HEAD
     callbackURL: process.env.GIT_CALLBACK ||'http://localhost:3001/api/github/callback'
-=======
-    callbackURL: 'https://bot02a.herokuapp.com/api/github/callback'
->>>>>>> ab3c8b9ccf91b986f74bc55933fbb75309f68368
 },
     (accessToken, refreshToken, profile, next) => {
         User.findOne({ email: profile._json.email })
