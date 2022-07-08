@@ -1,6 +1,6 @@
 // external libraries
 const passport = require('passport')
-const User = require('../models/UserModel')
+const User = require('../models/userModel')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const GithubStrategy = require('passport-github2').Strategy
 require('dotenv').config()
