@@ -4,6 +4,7 @@ const User = require('../models/UserModel')
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const GithubStrategy = require('passport-github2').Strategy
 require('dotenv').config()
+
 // env variables
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env
 
@@ -17,10 +18,11 @@ passport.deserializeUser((id, done) => {
     })
 })
 
+//google strategy
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
     clientSecret: GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3001/api/google/callback'
+    callbackURL:  process.env.G_CALLBACK || 'http://localhost:3001/api/google/callback'
 },
     (accessToken, refreshToken, profile, next) => {
         User.findOne({ email: profile._json.email })
@@ -47,10 +49,11 @@ passport.use(new GoogleStrategy({
 )
 )
 
+//github strategy
 passport.use(new GithubStrategy({
     clientID: GITHUB_CLIENT_ID,
     clientSecret: GITHUB_CLIENT_SECRET,
-    callbackURL: 'http://localhost:3001/api/github/callback'
+    callbackURL: process.env.GIT_CALLBACK ||'http://localhost:3001/api/github/callback'
 },
     (accessToken, refreshToken, profile, next) => {
         User.findOne({ email: profile._json.email })
