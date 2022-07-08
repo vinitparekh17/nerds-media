@@ -3,13 +3,13 @@ const app = require('./app');
 const socket = require('socket.io');
 
 //port number
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
 const io = socket(server, {
     cors: {
-        origin: "http://localhost:3000" || "https://technetic.vercel.app/",
+        origin: "http://localhost:3000",
         credentials: true,
     },
 })
