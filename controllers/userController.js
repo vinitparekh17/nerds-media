@@ -1,4 +1,4 @@
-const User = require("../models/UserModel");
+const User = require("../models/userModel");
 const CLIENT_URL = "https://technetic.vercel.app"
 
 
