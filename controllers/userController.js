@@ -3,14 +3,15 @@ const CLIENT_URL = "https://technetic.vercel.app"
 
 
 exports.loginSuccess = async (req, res, next) => {
-    if (req.user) {
-        res.status(200).json({
-            success: true,
-            message: "login success",
-            user: req.user
-        })
-    } else {
-        res.json({success: false, message: "Failed"})
+    try {
+            res.status(200).json({
+                success: true,
+                message: "login success",
+                user: req.user
+            })
+        
+    } catch (error) {
+        console.log(error);
     }
 }
 
