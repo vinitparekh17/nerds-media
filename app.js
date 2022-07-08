@@ -42,7 +42,7 @@ require("dotenv").config()
 // cors stands for Cross Origin Resource Locator
 app.use(
     cors({
-        origin: "http://localhost:3000" || "https://technetic.vercel.app/",
+        origin: "http://localhost:3000",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
@@ -71,9 +71,8 @@ app.get('/api/google', passport.authenticate('google', {
 }))
 
 app.get('/api/google/callback', passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/login' || 'https://technetic.vercel.app/login',
-    successRedirect: 'http://localhost:3000/login' || 'https://technetic.vercel.app/home'
-}))
+    failureRedirect: 'http://localhost:3000/login', // failure redirect back to the login page.
+    successRedirect: 'http://localhost:3000/login' }))
 
 
 //github authentication

@@ -14,6 +14,6 @@ const blogSchema = new Schema({
         ref: 'User',
         required: true
     }
-})
+}, { timestamps: true });
 
 module.exports = new model('Blog', blogSchema);
