@@ -37,7 +37,7 @@ require('./utils/passport')
 require("dotenv").config()
 
 //testing
-console.log(process.env.G_CALLBACK)
+console.log(process.env.G_CaLLBACK)
 
 // middlewares
 
