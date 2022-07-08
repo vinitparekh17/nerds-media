@@ -71,8 +71,8 @@ app.get('/api/google', passport.authenticate('google', {
 }))
 
 app.get('/api/google/callback', passport.authenticate('google', {
-    failureRedirect: 'http://localhost:3000/login' || 'https://technetic.vercel.app/login',
-    successRedirect: 'http://localhost:3000/login' || 'https://technetic.vercel.app/home'
+    failureRedirect: 'https://technetic.vercel.app/',
+    successRedirect: 'https://technetic.vercel.app/home'
 }))
 
 
@@ -82,8 +82,8 @@ app.get('/api/github', passport.authenticate('github', {
 }))
 
 app.get('/api/github/callback', passport.authenticate('github', {
-    failureRedirect: 'http://localhost:3000/' || 'https://technetic.vercel.app/',
-    successRedirect: 'http://localhost:3000/home' || 'https://technetic.vercel.app/home'
+    failureRedirect: 'https://technetic.vercel.app/',
+    successRedirect: 'https://technetic.vercel.app/home'
 }))
 
 module.exports = app
