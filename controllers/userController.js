@@ -9,14 +9,6 @@ exports.loginSuccess = async (req, res, next) => {
                 message: "login success",
                 user: req.user
             })
-<<<<<<< HEAD
-        
-=======
-        } else {
-            res.status(404).json({
-                success: false
-            })
->>>>>>> ab3c8b9ccf91b986f74bc55933fbb75309f68368
     } catch (error) {
         console.log(error);
     }
