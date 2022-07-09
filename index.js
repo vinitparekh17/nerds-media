@@ -1,4 +1,5 @@
 const app = require('./app');
+
 //socket.io implementation
 const socket = require('socket.io');
 
@@ -9,7 +10,7 @@ const server = app.listen(PORT, () => console.log("Server is running!"))
 
 const io = socket(server, {
     cors: {
-        origin: "https://technetic.vercel.app",
+        origin: "http://localhost:3000",
         credentials: true,
     },
 })
