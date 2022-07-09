@@ -6,23 +6,18 @@
   "author": "mr. parekh",
   "license": "MIT",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "cloudinary": "^1.30.0",
     "cookie-parser": "^1.4.6",
     "cookie-session": "^2.0.0",
     "cors": "^2.8.5",
-    "crypto": "^1.0.1",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "firebase": "^9.8.3",
-    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.8",
-    "morgan": "^1.10.0",
     "passport": "0.5",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
-    "socket.io": "^4.5.1",
-    "validator": "^13.7.0"
+    "socket.io": "^4.5.1"
   },
   "scripts": {
     "start": "node ."

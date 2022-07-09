@@ -1,10 +1,5 @@
 const { Schema, model } = require('mongoose')
-const validator = require('validator')
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
 require('dotenv').config()
-const { JWT_SECRET, JWT_EXPIRY } = process.env
 
 const userSchema = new Schema({
     
@@ -27,7 +22,6 @@ const userSchema = new Schema({
 
     email: {
         type: String,
-        validate: [validator.isEmail, 'Invalid email is not allowed!'],
         unique: true
     }
 
