@@ -1,19 +1,26 @@
 // external libraries
 const passport = require('passport')
 const User = require('../models/userModel')
+
+//Strategy declaration
 const GoogleStrategy = require('passport-google-oauth20').Strategy
 const GithubStrategy = require('passport-github2').Strategy
-require('dotenv').config()
 
-// env variables
+//env variables for google and github
+require('dotenv').config()
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)
+    done(null, {
+        id: user.id,
+        userName: user.userName,
+        email: user.email,
+        profilePic: user.profilePic
+    })
 });
 
-passport.deserializeUser((id, done) => {
-    User.findById(id, (err, user) => {
+passport.deserializeUser((user, done) => {
+    User.findById(user.id, (err, user) => {
         done(err, user)
     })
 })

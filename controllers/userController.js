@@ -1,13 +1,14 @@
-const User = require("../models/userModel");
-const CLIENT_URL = "http://localhost:3000/";
-
+const User = require("../models/userModel")
+const CLIENT_URL = "http://localhost:3000/"
 
 exports.loginSuccess = async (req, res, next) => {
     try {
+        let user = req.session.passport.user;
+        
             res.status(200).json({
                 success: true,
                 message: "login success",
-                user: req.user
+                user
             })
     } catch (error) {
         console.log(error);
