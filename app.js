@@ -36,9 +36,6 @@ require('./utils/passport')
 // env variables 
 require("dotenv").config()
 
-//testing
-console.log(process.env.G_CALLBACK)
-
 // middlewares
 
 // cors middleware which allows to read external websites
