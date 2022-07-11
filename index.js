@@ -1,7 +1,7 @@
 const app = require('./app');
 
 //socket.io implementation
-const socket = require('socket.io');
+const socket =  require('socket.io');
 
 //port number
 const PORT = process.env.PORT || 3001;
