@@ -1,6 +1,6 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const cors = require('cors')
 
 // database connection 
 const database = require("./config/db")
@@ -59,11 +59,13 @@ const user = require('./routes/user');
 const message = require('./routes/messages');
 const music = require('./routes/music');
 const blog = require('./routes/blog');
+const study = require('./routes/study');
 // initilising the routes as a middleware 
 app.use('/api',user)
 app.use('/api', message)
 app.use('/api', music)
 app.use('/api', blog)
+app.use('/api', study)
 
 //google auth routes only
 app.get('/api/google', passport.authenticate('google', {
@@ -86,4 +88,4 @@ app.get('/api/github/callback', passport.authenticate('github', {
     successRedirect: 'http://localhost:3000/home'
 }))
 
-module.exports = app
+module.exports = app;

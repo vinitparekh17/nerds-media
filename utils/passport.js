@@ -3,7 +3,7 @@ const passport = require('passport')
 const User = require('../models/userModel')
 
 //Strategy declaration
-const GoogleStrategy = require('passport-google-oauth20').Strategy
+const GoogleStrategy  = require('passport-google-oauth20').Strategy
 const GithubStrategy = require('passport-github2').Strategy
 
 //env variables for google and github
@@ -12,7 +12,7 @@ const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GITHUB_CLIENT_ID, GITHUB_CLIENT_
 
 passport.serializeUser((user, done) => {
     done(null, {
-        id: user.id,
+        _id: user.id,
         userName: user.userName,
         email: user.email,
         profilePic: user.profilePic
@@ -20,7 +20,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((user, done) => {
-    User.findById(user.id, (err, user) => {
+    User.findById(user._id, (err, user) => {
         done(err, user)
     })
 })
