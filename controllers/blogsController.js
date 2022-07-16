@@ -20,15 +20,18 @@ exports.addBlog = async (req, res, next) => {
 }
 
 exports.deleteBlog = async (req, res, next) => {
-    const { id } = req.body;
+    const {blogId, blogUserId, currentUserId  } = req.body;
     try {
-        const data = await Blog.deleteOne({ _id: id });
-        if (data) {
-            return res.json({ message: "Blog deleted successfully." });
-        } else {
-            return res.json({ message: "Failed to delete blog from the database" });
+        if (blogUserId === currentUserId) {
+            const data = await Blog.deleteOne({ _id: blogId });
+            if (data) {
+                return res.status(200).json({ message: "Blog deleted successfully." });
+            } else {
+                return res.status(404).json({ message: "Failed to delete blog from the database" });
+            }
         }
     } catch (ex) {
+        console.error(ex);
         next(ex);
     }
 }

@@ -10,33 +10,20 @@ database.connection()
 const cookieParser = require('cookie-parser')
 app.use(cookieParser())
 
-//passport package init (Google and Facebook login)
-const passport = require('passport')
-const session = require('cookie-session');
-// This sequence of middleware is necessary for login sessions.  The first
-// middleware loads session data and makes it available at `req.session`.  The
-// next lines initialize Passport and authenticate the request based on session
-// data.  If session data contains a logged in user, the user is set at
-// `req.user`.
-
-//option for cookie-session
-
-
-app.use(session({
-    name: 'session',
-    keys: ['mrparekh'],
-    maxAge: 3 * 24 * 60 * 60 * 1000
-}))
-app.use(passport.initialize())
-app.use(passport.session())
-
-// Passport configuration
-require('./utils/passport')
 
 // env variables 
 require("dotenv").config()
 
-// middlewares
+// middleware
+app.use(function (req, res, next) {
+    res.header('Content-Type', 'application/json;charset=UTF-8')
+    res.header('Access-Control-Allow-Credentials', true)
+    res.header(
+        'Access-Control-Allow-Headers',
+        'Origin, X-Requested-With, Content-Type, Accept'
+    )
+    next()
+})
 
 // cors middleware which allows to read external websites
 // cors stands for Cross Origin Resource Locator
@@ -60,32 +47,12 @@ const message = require('./routes/messages');
 const music = require('./routes/music');
 const blog = require('./routes/blog');
 const study = require('./routes/study');
+
 // initilising the routes as a middleware 
 app.use('/api',user)
 app.use('/api', message)
 app.use('/api', music)
 app.use('/api', blog)
 app.use('/api', study)
-
-//google auth routes only
-app.get('/api/google', passport.authenticate('google', {
-    scope: ['profile', 'email']
-}))
-
-app.get('/api/google/callback', passport.authenticate('google', {
-    failureRedirect: 'https://technetic.vercel.app/',
-    successRedirect: 'http://localhost:3000/home'
-}))
-
-
-//github authentication
-app.get('/api/github', passport.authenticate('github', {
-    scope: ['user:email']
-}))
-
-app.get('/api/github/callback', passport.authenticate('github', {
-    failureRedirect: 'https://technetic.vercel.app/',
-    successRedirect: 'http://localhost:3000/home'
-}))
 
 module.exports = app;

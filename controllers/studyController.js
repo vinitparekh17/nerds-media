@@ -12,7 +12,10 @@ exports.uploadFile = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        next();
+        res.status(500).json({
+            success: false,
+            message: "Failed to upload file to the database"
+        });
     }
 }
 
@@ -27,14 +30,27 @@ exports.getFiles = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        next();
+        res.status(500).json({
+            success: false,
+            message: "Failed to get files from the database"
+        });
     }
 }
 
-// find files by subject
 exports.getFilesBySubject = async (req, res, next) => {
+    const { subject } = req.body;
     try {
-        const data = await StudyModel.find({ Subject: req.body.subject });
+
+        // deleting the files that are older than 5 days
+        const oldFiles = await StudyModel.find({ "createdAt": { $lt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) } });
+        if (oldFiles) {
+            oldFiles.forEach(async file => {
+                await file.remove();
+            })
+        }
+
+        // get the list of files by subject
+        const data = await StudyModel.find({ Subject: subject });
         if (data) {
             return res.status(200).json(data);
         }
@@ -43,6 +59,9 @@ exports.getFilesBySubject = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        next();
+        res.status(500).json({
+            success: false,
+            message: "Failed to get files from the database"
+        });
     }
 }

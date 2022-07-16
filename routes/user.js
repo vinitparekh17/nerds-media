@@ -1,15 +1,15 @@
 const router = require('express').Router()
 const {
-    logout,
-    loginSuccess,
+    signin,
     getAllusers,
-    allUsers
+    allUsers,
+    getUser
 } = require("../controllers/userController")
 
 
-router.route('/login/success').get(loginSuccess)
-router.route('/logout').get(logout)
+router.route('/signin').post(signin)
 router.route('/allusers/:id').get(getAllusers)
 router.route('/allusers').get(allUsers)
+router.route('/getuser').post(getUser)
 
 module.exports = router;
