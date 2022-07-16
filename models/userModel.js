@@ -7,14 +7,10 @@ const userSchema = new Schema({
         type: String
     },
 
-    googleId: {
+    githubName: {
         type: String
     },
-
-    gitid: {
-        type: String
-    },
-
+    
     profilePic: {
         type: String,
         default: 'https://mpchsschool.in/wp-content/uploads/2019/10/default-profile-picture.png'
