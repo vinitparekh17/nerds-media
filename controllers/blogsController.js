@@ -10,7 +10,15 @@ exports.addBlog = async (req, res, next) => {
     try {
         const data = await blog.save();
         if (data) {
-            return res.json({ message: "Blog added successfully." });
+            return res.json({ 
+                success: true,
+                message: "Blog added successfully.",
+                blog: {
+                    title: data.title,
+                    content: data.content,
+                    userId: data.userId,
+                }
+            });
         } else {
             return res.json({ message: "Failed to add blog to the database" });
         }
@@ -20,18 +28,24 @@ exports.addBlog = async (req, res, next) => {
 }
 
 exports.deleteBlog = async (req, res, next) => {
-    const {blogId, blogUserId, currentUserId  } = req.body;
     try {
-        if (blogUserId === currentUserId) {
-            const data = await Blog.deleteOne({ _id: blogId });
+            const data = await Blog.deleteOne({ _id: req.body.id });
             if (data) {
-                return res.status(200).json({ message: "Blog deleted successfully." });
+                return res.status(200).json({
+                    success: true,
+                    message: "Blog deleted successfully."
+                });
             } else {
-                return res.status(404).json({ message: "Failed to delete blog from the database" });
+                return res.status(404).json({
+                    success: false,
+                    message: "Failed to delete blog from the database"
+                });
             }
-        }
     } catch (ex) {
-        console.error(ex);
+        res.status(500).json({
+            success: false,
+            message: "Failed to delete blog from the database"
+        });
         next(ex);
     }
 }

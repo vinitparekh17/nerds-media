@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
+// socket.io implementation
 const io = socket(server, {
     cors: {
         origin: "http://localhost:3000",
@@ -15,20 +16,26 @@ const io = socket(server, {
     },
 })
 
+// users object
 global.onlineUsers = new Map()
 
+// connection event handler for socket.io
 io.on("connection", socket => {
     global.chatSocket = socket;
 
-
+// add user with socket id to onlineUsers map
     socket.on("add-user", userId => {
         onlineUsers.set(userId, socket.id)
     })
 
+    // send message event handler for socket.io
     socket.on("send-message", data => {
+        console.log(data)
         const sendUserSocket = onlineUsers.get(data.to)
         if (sendUserSocket) {
             socket.to(sendUserSocket).emit("message-recieve", data.message)
         }
     })
+
+    
 })
