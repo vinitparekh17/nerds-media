@@ -3,6 +3,6 @@ const { uploadFile, getFiles, getFilesBySubject } = require('../controllers/stud
 
 router.route('/uploadFile').post(uploadFile)
 router.route('/getFiles').get(getFiles)
-router.route('/getFilesBySubject/:subject').post(getFilesBySubject)
+router.route('/getFilesBySubject').post(getFilesBySubject)
 
 module.exports = router;

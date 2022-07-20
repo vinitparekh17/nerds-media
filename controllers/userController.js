@@ -9,7 +9,8 @@ exports.signin = async (req, res, next) => {
         const existUser = await User.findOne({ email })
 
         if (existUser) {
-
+            req.session.user = existUser
+            console.log(req.session.user)
             res.status(200).json({
                 success: true,
                 message: "User already exists!",
@@ -20,13 +21,13 @@ exports.signin = async (req, res, next) => {
             const newUser = await User.create(req.body)
 
             if (newUser) {
+                req.session.user = newUser
                 res.status(200).json({
                     success: true,
                     message: "User created successfully!",
                     user: newUser
                 })
             }
-
         }
 
     } catch (error) {
@@ -34,31 +35,8 @@ exports.signin = async (req, res, next) => {
     }
 }
 
-// get signin user
 
-exports.getUser = async (req, res, next) => {
-    try {
-
-        const user = await User.findOne({ email: req.body.email });
-        if (user) {
-            res.status(200).json({
-                success: true,
-                message: "User found!",
-                user
-            });
-        }
-
-    } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            success: false,
-            message: "Something went wrong!"
-        })
-    }
-}
-
-
-// get all users except current user from database
+// get all users except current user from database for chat purpose
 exports.getAllusers = async (req, res, next) => {
     try {
         const users = await User.find({ _id: { $ne: req.params.id } }).select([
@@ -83,11 +61,37 @@ exports.allUsers = async (req, res, next) => {
             'profilePic'
         ]);
         if (data) {
-            return res.json({
-                success: true, data
+            return res.status(200).json({
+                success: true,
+                userList: data
             });
         } else {
-            return res.json({ message: "Failed to get blogs user!" });
+            return res.status(404).json({ message: "Failed to get blogs user!" });
+        }
+    } catch (ex) {
+        console.error(ex);
+        res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
+    }
+}
+
+exports.getUser = async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.body.id}).select([
+            '_id',
+            'userName',
+            'profilePic',
+            'email'
+        ]);
+        if (user) {
+            return res.json({
+                success: true,
+                user
+            });
+        } else {
+            return res.json({ message: "Failed to get user!" });
         }
     } catch (ex) {
         console.error(ex);
