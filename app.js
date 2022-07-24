@@ -29,7 +29,7 @@ app.use(session({
 // cors stands for Cross Origin Resource Locator
 app.use(
     cors({
-        origin: "http://localhost:3000",
+        origin: "https://technetic.vercel.app",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
