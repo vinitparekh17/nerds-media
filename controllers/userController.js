@@ -9,8 +9,6 @@ exports.signin = async (req, res, next) => {
         const existUser = await User.findOne({ email })
 
         if (existUser) {
-            req.session.user = existUser
-            console.log(req.session.user)
             res.status(200).json({
                 success: true,
                 message: "User already exists!",
@@ -21,7 +19,6 @@ exports.signin = async (req, res, next) => {
             const newUser = await User.create(req.body)
 
             if (newUser) {
-                req.session.user = newUser
                 res.status(200).json({
                     success: true,
                     message: "User created successfully!",
@@ -79,7 +76,7 @@ exports.allUsers = async (req, res, next) => {
 
 exports.getUser = async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.body.id}).select([
+        const user = await User.findOne({ _id: req.body.id }).select([
             '_id',
             'userName',
             'profilePic',
