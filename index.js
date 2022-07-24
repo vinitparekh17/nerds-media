@@ -11,7 +11,7 @@ const server = app.listen(PORT, () => console.log("Server is running!"))
 // socket.io implementation
 const io = socket(server, {
     cors: {
-        origin: "https://technetic.vercel.app/",
+        origin: "https://technetic.vercel.app",
         credentials: true,
     },
 })
