@@ -1,11 +1,12 @@
 const Blog = require('../models/blogModel');
 
 exports.addBlog = async (req, res, next) => {
-    const { title, content, userId } = req.body;
+    const { title, content, userId, image } = req.body;
     const blog = new Blog({
         title,
         content,
-        userId
+        userId,
+        image
     });
     try {
         const data = await blog.save();
