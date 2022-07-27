@@ -8,16 +8,14 @@ const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
+const origin = 'http://localhost:3000' || 'https://technetic.vercel.app';
 // socket.io implementation
 const io = socket(server, {
-    cors: {
-        origin: "https://technetic.vercel.app",
-        credentials: true,
-    },
+    cors: { origin, credentials: true }
 })
 
 // users object
-global.onlineUsers = new Map()
+global.onlineUsers = new Map();
 
 // connection event handler for socket.io
 io.on("connection", socket => {
@@ -26,12 +24,10 @@ io.on("connection", socket => {
     // add user with socket id to onlineUsers map
     socket.on("add-user", userId => {
         onlineUsers.set(userId, socket.id)
-        console.log(onlineUsers)
     })
 
     // send message event handler for socket.io
     socket.on("send-message", data => {
-        console.log(data)
         const sendUserSocket = onlineUsers.get(data.to)
         if (sendUserSocket) {
             socket.to(sendUserSocket).emit("message-recieve", data.message)
