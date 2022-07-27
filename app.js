@@ -27,7 +27,7 @@ app.use(session({
 
 // cors middleware which allows to read external websites
 // cors stands for Cross Origin Resource Locator
-const origin = 'http://localhost:3000' || 'https://technetic.vercel.app';
+const origin = 'https://technetic.vercel.app';
 app.use(
     cors({
         origin,
