@@ -8,7 +8,18 @@ const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
-const origin = 'http://localhost:3000' || 'https://technetic.vercel.app';
+const origin = 'https://technetic.vercel.app';
+
+// cors middleware which allows to read external websites
+// cors stands for Cross Origin Resource Locator
+app.use(
+    cors({
+        origin,
+        methods: "GET,POST,PUT,DELETE",
+        credentials: true,
+    })
+);
+
 // socket.io implementation
 const io = socket(server, {
     cors: { origin, credentials: true }

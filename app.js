@@ -25,17 +25,6 @@ app.use(session({
     }
 }))
 
-// cors middleware which allows to read external websites
-// cors stands for Cross Origin Resource Locator
-const origin = 'http://localhost:3000' || 'https://technetic.vercel.app';
-app.use(
-    cors({
-        origin,
-        methods: "GET,POST,PUT,DELETE",
-        credentials: true,
-    })
-);
-
 // To get data from URL ( GET method in form )
 app.use(express.urlencoded({ extended: true }))
 
