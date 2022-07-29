@@ -13,12 +13,7 @@ exports.addBlog = async (req, res, next) => {
         if (data) {
             return res.json({ 
                 success: true,
-                message: "Blog added successfully.",
-                blog: {
-                    title: data.title,
-                    content: data.content,
-                    userId: data.userId,
-                }
+                message: "Blog added successfully."
             });
         } else {
             return res.json({ message: "Failed to add blog to the database" });
@@ -60,6 +55,6 @@ exports.showBlogs = async (req, res, next) => {
             return res.json({ message: "Failed to get blogs from the database" });
         }
     } catch (ex) {
-        next(ex);
+        console.log(ex);
     }
 }

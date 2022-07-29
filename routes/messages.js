@@ -1,8 +1,8 @@
 const { addMessage, getMessages, ChatUsers } = require("../controllers/messageController");
 const router = require("express").Router();
 
-router.post("/addmsg", addMessage);
-router.post("/getmsg", getMessages);
-router.post("/chatuser", ChatUsers);
+router.route("/addmsg").post(addMessage);
+router.route("/getmsg").post(getMessages);
+router.route("/chatuser").post(ChatUsers);
 
 module.exports = router;
