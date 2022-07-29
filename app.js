@@ -27,7 +27,7 @@ app.use(session({
 
 // cors middleware which allows to read external websites
 // cors stands for Cross Origin Resource Locator
-const origin = 'https://technetic.vercel.app';
+const origin = 'http://localhost:3000' || 'https://technetic.vercel.app';
 app.use(
     cors({
         origin,
@@ -47,11 +47,13 @@ const user = require('./routes/user');
 const message = require('./routes/messages');
 const blog = require('./routes/blog');
 const study = require('./routes/study');
+const code = require('./routes/code');
 
 // initilising the routes as a middleware 
 app.use('/api',user)
 app.use('/api', message)
 app.use('/api', blog)
 app.use('/api', study)
+app.use('/api', code)
 
 module.exports = app;
