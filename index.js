@@ -2,16 +2,16 @@ const app = require('./app');
 
 //socket.io implementation
 const socket = require('socket.io');
+const cors = require('cors');
 
 //port number
 const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
-const origin = 'https://technetic.vercel.app';
-
 // cors middleware which allows to read external websites
 // cors stands for Cross Origin Resource Locator
+const origin = 'https://technetic.vercel.app';
 app.use(
     cors({
         origin,
