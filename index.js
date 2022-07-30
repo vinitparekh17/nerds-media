@@ -14,9 +14,11 @@ const server = app.listen(PORT, () => console.log("Server is running!"))
 const origin = 'https://technetic.vercel.app';
 app.use(
     cors({
-        origin,
+        origin: origin,
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
+        allowedHeaders: "Content-Type, Authorization, X-Requested-With, Accept, Origin, Referer, User-Agent, Cache-Control, Pragma, Expires",
+        allowedOrigins: "*"
     })
 );
 
