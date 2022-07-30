@@ -1,5 +1,6 @@
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors')
 const app = express();
 
 // database connection 
@@ -15,14 +16,14 @@ app.use(cookieParser())
 require("dotenv").config()
 
 // session
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
-    }
-}))
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true,
+//     cookie: {
+//         maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+//     }
+// }))
 
 // To get data from URL ( GET method in form )
 app.use(express.urlencoded({ extended: true }))
@@ -36,6 +37,14 @@ const message = require('./routes/messages');
 const blog = require('./routes/blog');
 const study = require('./routes/study');
 const code = require('./routes/code');
+
+//cors
+app.use(
+    cors({
+        origin: "https://technetic.vercel.app",
+        methods: "GET,POST,PUT,DELETE",
+        credentials: true,
+    })
 
 // initilising the routes as a middleware 
 app.use('/api',user)
