@@ -45,6 +45,7 @@ app.use(
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
+)
 
 // initilising the routes as a middleware 
 app.use('/api',user)
