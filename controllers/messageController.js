@@ -1,3 +1,4 @@
+const User = require('../models/userModel');
 const Messages = require("../models/messageModel");
 
 exports.getMessages = async (req, res, next) => {
@@ -84,9 +85,11 @@ exports.ChatUsers = async (req, res, next) => {
       return user[0];
     }))]
 
+    // getting the user details from the users collection
+    const usersDetails = await User.find({ _id: { $in: users } }).select(['userName', 'profilePic', '_id']);
     res.status(200).json({
       success: true,
-      users
+      users: usersDetails
     });
 
   } catch (error) {
@@ -94,7 +97,5 @@ exports.ChatUsers = async (req, res, next) => {
       success: false,
       error
     });
-
-    console.log(error);
   }
 }
