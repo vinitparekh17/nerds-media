@@ -41,7 +41,7 @@ const code = require('./routes/code');
 //cors
 app.use(
     cors({
-        origin: "https://technetic.vercel.app",
+        origin: "http://localhost:3000",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
