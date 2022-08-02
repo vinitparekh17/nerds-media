@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 
 const server = app.listen(PORT, () => console.log("Server is running!"))
 
-const origin = 'http://localhost:3000';
+const origin = 'https://technetic.vercel.app';
 // socket.io implementation
 const io = socket(server, {
     cors: { origin, credentials: true }
