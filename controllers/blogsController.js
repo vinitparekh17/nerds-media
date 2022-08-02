@@ -18,8 +18,8 @@ exports.addBlog = async (req, res, next) => {
         } else {
             return res.json({ message: "Failed to add blog to the database" });
         }
-    } catch (ex) {
-        next(ex);
+    } catch (error) {
+        console.log(error);
     }
 }
 
@@ -37,12 +37,12 @@ exports.deleteBlog = async (req, res, next) => {
                     message: "Failed to delete blog from the database"
                 });
             }
-    } catch (ex) {
+    } catch (error) {
         res.status(500).json({
             success: false,
             message: "Failed to delete blog from the database"
         });
-        next(ex);
+        console.log(error);
     }
 }
 
