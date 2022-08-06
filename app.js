@@ -41,7 +41,8 @@ const code = require('./routes/code');
 //cors
 app.use(
     cors({
-        origin: "https://technetic.vercel.app",
+        // origin: "http://localhost:3000",
+        origin: "https://bot02a.herokuapp.com",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })

@@ -4,7 +4,10 @@ const fileSchema = new Schema({
     fileName: String,
     Semester: String,
     Subject: String,
-    Author: Schema.Types.ObjectId,
+    Author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     URL: String
 }
     , { timestamps: true });
