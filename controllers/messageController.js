@@ -7,6 +7,15 @@ exports.getMessages = async (req, res, next) => {
     // to is the user who received the message
     const { from, to } = req.body;
 
+    // remove messages older than 1 day
+    const oldMessages = await Messages.find({ "createdAt": { $lt: new Date(Date.now() - 24 * 60 * 60 * 1000) } });
+    if (oldMessages) {
+      oldMessages.forEach(async message => {
+        await message.remove();
+      }
+      );
+    }
+
     // get all messages where from and to are in the users array
     // $all is a mongoose operator is used to check if the array contains all the values and not just one of them
     // $in is a mongoose operator is used to check if the array contains all the values and not just one of them
@@ -36,13 +45,6 @@ exports.getMessages = async (req, res, next) => {
 
 exports.addMessage = async (req, res, next) => {
   try {
-    const oldMessages = await Messages.find({ "createdAt": { $lt: new Date(Date.now() - 24 * 60 * 60 * 1000) } });
-    if (oldMessages) {
-      oldMessages.forEach(async message => {
-        await message.remove();
-      }
-      );
-    }
 
     // get the message from the request body
     const { from, to, message } = req.body;

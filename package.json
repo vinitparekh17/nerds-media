@@ -1,5 +1,5 @@
 {
-  "name": "edtech",
+  "name": "technetic",
   "version": "1.0.0",
   "description": "A web application to connect the people for education",
   "main": "index.js",
@@ -13,6 +13,7 @@
     "express-session": "^1.17.3",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.8",
+    "nodemailer": "^6.7.7",
     "socket.io": "^4.5.1"
   },
   "scripts": {
