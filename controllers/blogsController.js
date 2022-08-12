@@ -11,7 +11,7 @@ exports.addBlog = async (req, res, next) => {
     try {
         const data = await blog.save();
         if (data) {
-            return res.json({ 
+            return res.json({
                 success: true,
                 message: "Blog added successfully."
             });
@@ -25,18 +25,18 @@ exports.addBlog = async (req, res, next) => {
 
 exports.deleteBlog = async (req, res, next) => {
     try {
-            const data = await Blog.deleteOne({ _id: req.body.id });
-            if (data) {
-                return res.status(200).json({
-                    success: true,
-                    message: "Blog deleted successfully."
-                });
-            } else {
-                return res.status(404).json({
-                    success: false,
-                    message: "Failed to delete blog from the database"
-                });
-            }
+        const data = await Blog.deleteOne({ _id: req.body.id });
+        if (data) {
+            return res.status(200).json({
+                success: true,
+                message: "Blog deleted successfully."
+            });
+        } else {
+            return res.status(404).json({
+                success: false,
+                message: "Failed to delete blog from the database"
+            });
+        }
     } catch (error) {
         res.status(500).json({
             success: false,
@@ -53,6 +53,29 @@ exports.showBlogs = async (req, res, next) => {
             return res.json({ success: true, data });
         } else {
             return res.json({ message: "Failed to get blogs from the database" });
+        }
+    } catch (ex) {
+        console.log(ex);
+    }
+}
+
+exports.getBlogById = async (req, res, next) => {
+    try {
+        const data = await Blog.findById(req.query.id);
+        if (data) {
+            return res.status(200).json({
+                success: true,
+                data: {
+                    title: data.title,
+                    content: data.content,
+                    userId: data.userId,
+                    image: data.image,
+                    createdAt: new Date(data.createdAt).toLocaleDateString(),
+                }
+
+            });
+        } else {
+            return res.status(404).json({ message: "Failed to get blog from the database" });
         }
     } catch (ex) {
         console.log(ex);

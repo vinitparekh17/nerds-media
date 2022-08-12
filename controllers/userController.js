@@ -1,6 +1,5 @@
 const User = require("../models/userModel")
-const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = process.env;
+const mailer = require('../utils/nodeMailer');
 
 // get current user details from database for authentication
 exports.signin = async (req, res, next) => {
@@ -19,6 +18,13 @@ exports.signin = async (req, res, next) => {
             const newUser = await User.create(req.body)
 
             if (newUser) {
+                console.log("ping...")
+                mailer({
+                    email: newUser.email,
+                    subject: "Welcome",
+                    text: "Welcome to Technetic",
+                    html: `<h1>Welcome to Technetic</h1><p>You have successfully registered to Technetic</p>`
+                })
                 res.status(200).json({
                     success: true,
                     message: "User created successfully!",
@@ -96,5 +102,65 @@ exports.getUser = async (req, res, next) => {
             success: false,
             message: "Something went wrong!"
         })
+    }
+}
+
+exports.messMail = async (req, res, next) => {
+    try {
+        const userEmails = await User.find({}).select([
+            'email'
+        ]);
+        const { subject, text, html } = req.body;
+        if (userEmails) {
+            userEmails.forEach(async (user) => {
+                mailer({
+                    email: user.email,
+                    subject,
+                    text,
+                    html
+                })
+            }).then(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: "Mail sent successfully!"
+                });
+            }).catch(err => {
+                return res.status(500).json({
+                    success: false,
+                    message: "Something went wrong!",
+                    err
+                })
+            })
+        } else {
+            return res.status(404).json({ message: "Failed to get user emails!" });
+        }
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+}
+
+exports.mailUser = async (req, res, next) => {
+    try {
+        const { email, subject, text, html } = req.body;
+        mailer({
+            email,
+            subject,
+            text,
+            html
+        }).then(() => {
+            return res.status(200).json({
+                success: true,
+                message: "Mail sent successfully!"
+            });
+        }).catch(err => {
+            return res.status(500).json({
+                success: false,
+                message: "Something went wrong!",
+                err
+            })
+        })
+    } catch (error) {
+        console.log(error);
     }
 }
