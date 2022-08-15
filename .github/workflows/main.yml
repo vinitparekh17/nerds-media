@@ -1,4 +1,4 @@
-name: push to dockerHub
+name: push to DockerHub
 
 on:
   push:
