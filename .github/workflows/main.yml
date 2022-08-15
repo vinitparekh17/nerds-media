@@ -30,15 +30,15 @@ jobs:
           username: bhogayatajay
           password: dckr_pat_1sdRqvrdzsefiOVtvnweZdG6oqs
 
-      - name: Build ans push
-        id: docker-build
+      - name: Build and push
+        id: docker_build
         uses: docker/build-push-action@v2
         with:
           context: ./
-          file: ./dockerfile
+          file: ./Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: true
-          tags: bhogayatajay/technetic-server:latest
+          tags: bhogayatajay/technetic-server
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
 
