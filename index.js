@@ -17,7 +17,7 @@ const io = socket(server, {
 });
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Namste World !!!");
 });
 
 // users object
