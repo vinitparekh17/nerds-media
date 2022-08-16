@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const webhook = require('./webhook');
 require('dotenv').config()
 const URL = process.env.MONGOURL
 
@@ -9,6 +10,7 @@ exports.connection = async () => {
     })
         .then(() => console.log("Database connected!"))
         .catch(err => {
+            webhook(err);
             console.log(err);
             process.exit(1)
         })

@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Messages = require("../models/messageModel");
+const webhook = require('../utils/webhook');
 
 exports.getMessages = async (req, res, next) => {
   try {
@@ -38,8 +39,9 @@ exports.getMessages = async (req, res, next) => {
     });
 
     res.json(projectedMessages);
-  } catch (ex) {
-    next(ex);
+  } catch (error) {
+    conaole.log(error);
+    webhook(error);
   }
 };
 
@@ -60,7 +62,8 @@ exports.addMessage = async (req, res, next) => {
     } else {
       return res.json({ message: "Failed to add message to the database" });
     }
-  } catch (ex) {
+  } catch (error) {
+    webhook(error);
     res.status(500).json({
       success: false,
       message: "Failed to add message to the database"
@@ -95,6 +98,7 @@ exports.ChatUsers = async (req, res, next) => {
     });
 
   } catch (error) {
+    webhook(error);
     res.status(500).json({
       success: false,
       error
