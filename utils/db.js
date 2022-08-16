@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const webhook = require('./webhook');
+const Webhook = require('./webhook');
+
 require('dotenv').config()
 const URL = process.env.MONGOURL
 
@@ -8,9 +9,12 @@ exports.connection = async () => {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
-        .then(() => console.log("Database connected!"))
+        .then(() => {
+            console.log('Database connected');
+            Webhook(`Server is running!\nMongoDB is connected!`)
+        })
         .catch(err => {
-            webhook(err);
+            Webhook(err)
             console.log(err);
             process.exit(1)
         })

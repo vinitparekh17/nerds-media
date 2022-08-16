@@ -4,7 +4,7 @@ const cors = require('cors')
 const app = express();
 
 // database connection 
-const database = require("./config/db")
+const database = require("./utils/db")
 database.connection()
 
 // for reading cookies and handling 
