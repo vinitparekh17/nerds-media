@@ -2,6 +2,7 @@ const app = require("./app");
 
 //socket.io implementation
 const socket = require("socket.io");
+const mailer = require("./utils/nodeMailer");
 
 //port number
 const PORT = process.env.PORT || 8080;

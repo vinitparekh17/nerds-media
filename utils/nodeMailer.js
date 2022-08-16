@@ -1,4 +1,5 @@
 const nodemailer = require('nodemailer');
+const webhook = require('./webhook');
 
 const mailer = async (option) => {
     const transporter = nodemailer.createTransport({
@@ -6,8 +7,8 @@ const mailer = async (option) => {
         port: 587,
         secure: false,
         auth: {
-            user: 'dcvinit1742@gmail.com',
-            pass: 'nulcgelznzylbdch'
+            user: 'technetic.co.in@gmail.com',
+            pass: 'hgfzvwocaabbcues'
         },
         tls: {
             rejectUnauthorized: false,
@@ -16,7 +17,7 @@ const mailer = async (option) => {
     });
 
     const mailOptions = {
-        from: 'Technetic <abc@gmail.com>',
+        from: 'Technetic <technetic.co.in@gmail.com>',
         to: option.email,
         subject: option.subject,
         text: option.text,
@@ -27,6 +28,7 @@ const mailer = async (option) => {
         .then(info => {
             console.log(info);
         }).catch(err => {
+            webhook(err);
             console.log(err);
         });
 }

@@ -1,4 +1,5 @@
 const StudyModel = require('../models/studyModel');
+const webhook = require('../utils/webhook');
 
 exports.uploadFile = async (req, res, next) => {
     try {
@@ -12,6 +13,7 @@ exports.uploadFile = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
+        webhook(error);
         res.status(500).json({
             success: false,
             message: "Failed to upload file to the database"
@@ -29,6 +31,7 @@ exports.getFiles = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get files from the database" });
         }
     } catch (error) {
+        webhook(error);
         console.log(error);
         res.status(500).json({
             success: false,
@@ -58,6 +61,7 @@ exports.getFilesBySubject = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get files from the database" });
         }
     } catch (error) {
+        webhook(error);
         console.log(error);
         res.status(500).json({
             success: false,
@@ -96,6 +100,7 @@ exports.sendOldFiles = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
+        webhook(error);
         res.status(500).json({
             success: false,
             message: "Failed to get files from the database"

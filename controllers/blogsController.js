@@ -1,4 +1,5 @@
 const Blog = require('../models/blogModel');
+const webhook = require('../utils/webhook');
 
 exports.addBlog = async (req, res, next) => {
     const { title, content, userId, image } = req.body;
@@ -19,6 +20,7 @@ exports.addBlog = async (req, res, next) => {
             return res.json({ message: "Failed to add blog to the database" });
         }
     } catch (error) {
+        webhook(error);
         console.log(error);
     }
 }
@@ -43,6 +45,7 @@ exports.deleteBlog = async (req, res, next) => {
             message: "Failed to delete blog from the database"
         });
         console.log(error);
+        webhook(error);
     }
 }
 
@@ -54,8 +57,9 @@ exports.showBlogs = async (req, res, next) => {
         } else {
             return res.json({ message: "Failed to get blogs from the database" });
         }
-    } catch (ex) {
-        console.log(ex);
+    } catch (error) {
+        webhook(error);
+        console.log(error);
     }
 }
 
@@ -77,7 +81,8 @@ exports.getBlogById = async (req, res, next) => {
         } else {
             return res.status(404).json({ message: "Failed to get blog from the database" });
         }
-    } catch (ex) {
-        console.log(ex);
+    } catch (error) {
+        console.log(error);
+        webhook(error);
     }
 }
