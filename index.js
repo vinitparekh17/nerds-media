@@ -2,12 +2,12 @@ const app = require("./app");
 
 //socket.io implementation
 const socket = require("socket.io");
-const mailer = require("./utils/nodeMailer");
+const webhook = require("./utils/webhook");
 
 //port number
 const PORT = process.env.PORT || 8080;
 
-const server = app.listen(PORT, () => console.log("Server is running!"));
+const server = app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 // const origin = 'http://localhost:3000';
 const origin = "https://technetic.vercel.app";
