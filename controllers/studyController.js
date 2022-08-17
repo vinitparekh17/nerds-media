@@ -107,3 +107,23 @@ exports.sendOldFiles = async (req, res, next) => {
         });
     }
 }
+
+exports.reportFile = async (req, res, next) => {
+    try {
+        const { id } = req.body;
+        const data = await StudyModel.findByIdAndUpdate(id, { Reported: true });
+        if (data) {
+            return res.status(200).json({ success: true, message: "File reported successfully." });
+        }
+        else {
+            return res.status(404).json({ success: false, message: "Failed to report file from the database" });
+        }
+    } catch (error) {
+        console.log(error);
+        webhook(error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to report file from the database"
+        });
+    }
+}

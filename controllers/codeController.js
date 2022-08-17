@@ -20,7 +20,7 @@ exports.getCode = async (req, res) => {
         res.status(200).json({ success: true, codes });
     } catch (err) {
         webhook(err);
-        res.status(500).json({ success: false, message: err.message });
+        res.status(500).json({ success: false, message: err });
     }
 }
 
@@ -30,6 +30,30 @@ exports.deleteCode = async (req, res) => {
         res.status(200).json({ success: true, message: 'Code has been deleted' });
     } catch (err) {
         webhook(err);
-        res.status(500).json({ success: false, message: err.message });
+        res.status(500).json({ success: false, message: err });
+    }
+}
+
+exports.updateCode = async (req, res) => {
+    try {
+        const code = await Codes.findByIdAndUpdate(req.body.id, req.body);
+        if (code) {
+            res.status(200).json({ success: true, message: 'Code has been updated' });
+        }
+    } catch (err) {
+        webhook(err);
+        res.status(500).json({ success: false, message: err });
+    }
+}
+
+exports.reportCode = async (req, res) => {
+    try {
+        const code = await Codes.findByIdAndUpdate(req.body.id, { reported: true });
+        if (code) {
+            res.status(200).json({ success: true, message: 'Code has been reported' });
+        }
+    } catch (err) {
+        webhook(err);
+        res.status(500).json({ success: false, message: err });
     }
 }

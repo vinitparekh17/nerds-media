@@ -2,7 +2,6 @@ const app = require("./app");
 
 //socket.io implementation
 const socket = require("socket.io");
-const webhook = require("./utils/webhook");
 
 //port number
 const PORT = process.env.PORT || 8080;
