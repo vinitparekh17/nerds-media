@@ -28,7 +28,7 @@ const mailer = async (option) => {
         .then(info => {
             console.log(info);
         }).catch(err => {
-            webhook(err);
+            webhook(`\`\`\`js\n${err}\`\`\``);
             console.log(err);
         });
 }

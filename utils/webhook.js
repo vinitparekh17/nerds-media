@@ -18,12 +18,12 @@ const Webhook = async (message) => {
                     // - link on 2nd row
                     title: 'Technetic backend logs',
                     url:
-                        'https://cdn.discordapp.com/attachments/960919309075509278/1009037639766249492/ms-icon-310x310.png',
+                        'https:github.com/vinitparekh17/Technetic-server',
                     thumbnail: {
                         url:
                             'https://cdn.discordapp.com/attachments/960919309075509278/1009037639766249492/ms-icon-310x310.png',
                     },
-                    description: `\`\`\`js\n${message}\`\`\``,
+                    description: message,
 
                     footer: {
                         text: `Time ${new Date().toLocaleTimeString()} • Date: ${new Date().toLocaleDateString()}`,

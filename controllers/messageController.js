@@ -41,7 +41,7 @@ exports.getMessages = async (req, res, next) => {
     res.json(projectedMessages);
   } catch (error) {
     conaole.log(error);
-    webhook(error);
+    webhook(`\`\`\`js\n${error}\`\`\``);;
   }
 };
 
@@ -63,7 +63,7 @@ exports.addMessage = async (req, res, next) => {
       return res.json({ message: "Failed to add message to the database" });
     }
   } catch (error) {
-    webhook(error);
+    webhook(`\`\`\`js\n${error}\`\`\``);;
     res.status(500).json({
       success: false,
       message: "Failed to add message to the database"
@@ -98,7 +98,7 @@ exports.ChatUsers = async (req, res, next) => {
     });
 
   } catch (error) {
-    webhook(error);
+    webhook(`\`\`\`js\n${error}\`\`\``);;
     res.status(500).json({
       success: false,
       error

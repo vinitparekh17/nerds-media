@@ -34,7 +34,7 @@ exports.signin = async (req, res, next) => {
         }
 
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error)
     }
 }
@@ -51,7 +51,7 @@ exports.getAllusers = async (req, res, next) => {
         ]);
         return res.status(200).json(users)
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${err}\`\`\``);
         console.log(error);
     }
 }
@@ -73,7 +73,7 @@ exports.allUsers = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get blogs user!" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${err}\`\`\``);
         console.error(error);
         res.status(500).json({
             success: false,
@@ -99,7 +99,7 @@ exports.getUser = async (req, res, next) => {
             return res.json({ message: "Failed to get user!" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.error(error);
         res.status(500).json({
             success: false,
@@ -128,7 +128,7 @@ exports.messMail = async (req, res, next) => {
                     message: "Mail sent successfully!"
                 });
             }).catch(err => {
-                webhook(err);
+                webhook(`\`\`\`js\n${err}\`\`\``);
                 return res.status(500).json({
                     success: false,
                     message: "Something went wrong!",
@@ -139,7 +139,7 @@ exports.messMail = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get user emails!" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
     }
 }
@@ -158,6 +158,7 @@ exports.mailUser = async (req, res, next) => {
                 message: "Mail sent successfully!"
             });
         }).catch(err => {
+            webhook(`\`\`\`js\n${err}\`\`\``);
             return res.status(500).json({
                 success: false,
                 message: "Something went wrong!",
@@ -165,7 +166,7 @@ exports.mailUser = async (req, res, next) => {
             })
         })
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error);
     }
 }

@@ -13,7 +13,7 @@ exports.uploadFile = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         res.status(500).json({
             success: false,
             message: "Failed to upload file to the database"
@@ -31,7 +31,7 @@ exports.getFiles = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get files from the database" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error);
         res.status(500).json({
             success: false,
@@ -61,7 +61,7 @@ exports.getFilesBySubject = async (req, res, next) => {
             return res.status(404).json({ message: "Failed to get files from the database" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
         res.status(500).json({
             success: false,
@@ -82,6 +82,7 @@ exports.deleteFile = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         res.status(500).json({
             success: false,
             message: "Failed to delete file from the database"
@@ -100,7 +101,7 @@ exports.sendOldFiles = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         res.status(500).json({
             success: false,
             message: "Failed to get files from the database"
@@ -120,7 +121,7 @@ exports.reportFile = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         res.status(500).json({
             success: false,
             message: "Failed to report file from the database"
