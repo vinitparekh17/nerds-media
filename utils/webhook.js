@@ -8,7 +8,7 @@ const Webhook = async (message) => {
             content: "<@&892617641729081345>",
             embeds: [
                 {
-                    color: "#00ffab",
+                    color: 0x00AE86,
                     author: {
                         name: 'Backend Bot!',
                         url: 'https://github.com/vinitparekh17/Technetic-server',
