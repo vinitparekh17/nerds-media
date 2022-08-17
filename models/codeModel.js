@@ -24,6 +24,10 @@ const CodeSchema = new Schema({
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    reported: {
+        type: Boolean,
+        default: false
     }
 });
 

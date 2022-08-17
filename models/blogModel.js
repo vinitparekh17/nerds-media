@@ -16,6 +16,10 @@ const blogSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         required: true
+    },
+    reported: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 

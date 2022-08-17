@@ -8,7 +8,11 @@ const fileSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     },
-    URL: String
+    URL: String,
+    Reported: {
+        type: Boolean,
+        default: false
+    }
 }
     , { timestamps: true });
 

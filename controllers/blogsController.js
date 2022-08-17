@@ -86,3 +86,38 @@ exports.getBlogById = async (req, res, next) => {
         webhook(error);
     }
 }
+
+exports.reportBlog = async (req, res, next) => {
+    try {
+        const data = await Blog.findByIdAndUpdate(req.body.id, { reported: true });
+        if (data) {
+            return res.status(200).json({
+                success: true,
+                message: "Blog reported successfully."
+            });
+        } else {
+            return res.status(404).json({ message: "Failed to report blog from the database" });
+        }
+    } catch (error) {
+        console.log(error);
+        webhook(error);
+    }
+}
+
+exports.updateBlog = async (req, res, next) => {
+    try {
+        const { title, content, image } = req.body;
+        const data = await Blog.findByIdAndUpdate(req.body.id, { title, content, image });
+        if (data) {
+            return res.status(200).json({
+                success: true,
+                message: "Blog updated successfully."
+            });
+        } else {
+            return res.status(404).json({ message: "Failed to update blog from the database" });
+        }
+    } catch (error) {
+        console.log(error);
+        webhook(error);
+    }
+}
