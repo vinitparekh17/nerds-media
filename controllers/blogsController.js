@@ -20,7 +20,7 @@ exports.addBlog = async (req, res, next) => {
             return res.json({ message: "Failed to add blog to the database" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error);
     }
 }
@@ -45,7 +45,7 @@ exports.deleteBlog = async (req, res, next) => {
             message: "Failed to delete blog from the database"
         });
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
     }
 }
 
@@ -58,7 +58,7 @@ exports.showBlogs = async (req, res, next) => {
             return res.json({ message: "Failed to get blogs from the database" });
         }
     } catch (error) {
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error);
     }
 }
@@ -83,7 +83,7 @@ exports.getBlogById = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);;
     }
 }
 
@@ -100,7 +100,7 @@ exports.reportBlog = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);
     }
 }
 
@@ -118,6 +118,6 @@ exports.updateBlog = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
-        webhook(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);
     }
 }
