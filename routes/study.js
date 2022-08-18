@@ -3,7 +3,6 @@ const { uploadFile, getFiles, getFilesBySubject, deleteFile, sendOldFiles, repor
 
 router.route('/uploadFile').post(uploadFile)
 router.route('/getFiles').get(getFiles)
-router.route('/getFilesBySubject').post(getFilesBySubject)
 router.route('/deletefile').post(deleteFile)
 router.route('/reportfile').post(reportFile)
 router.route('/sendOldFiles').get(sendOldFiles)
