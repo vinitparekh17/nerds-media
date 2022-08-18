@@ -42,7 +42,7 @@ const code = require('./routes/code');
 app.use(
     cors({
         // origin: "http://localhost:3000",
-        origin: "https://www.technetic.co.in/",
+        origin: "https://www.technetic.co.in",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
