@@ -63,30 +63,6 @@ exports.showBlogs = async (req, res, next) => {
     }
 }
 
-exports.getBlogById = async (req, res, next) => {
-    try {
-        const data = await Blog.findById(req.query.id);
-        if (data) {
-            return res.status(200).json({
-                success: true,
-                data: {
-                    title: data.title,
-                    content: data.content,
-                    userId: data.userId,
-                    image: data.image,
-                    createdAt: new Date(data.createdAt).toLocaleDateString(),
-                }
-
-            });
-        } else {
-            return res.status(404).json({ message: "Failed to get blog from the database" });
-        }
-    } catch (error) {
-        console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
-    }
-}
-
 exports.reportBlog = async (req, res, next) => {
     try {
         const data = await Blog.findByIdAndUpdate(req.body.id, { reported: true });
