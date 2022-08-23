@@ -1,5 +1,6 @@
 const Blog = require('../models/blogModel');
 const webhook = require('../utils/webhook');
+const yt = require('yt-search');
 
 exports.addBlog = async (req, res, next) => {
     const { title, content, userId, image } = req.body;
@@ -94,6 +95,32 @@ exports.updateBlog = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error);
+        webhook(`\`\`\`js\n${error}\`\`\``);
+    }
+}
+
+exports.Search = (req, res) => {
+    try {
+        const { query } = req.body;
+        if (query !== "") {
+            yt.search(query)
+                .then(results => {
+                    if (results.all.length > 0) {
+                        console.log(results.all.filter(result => result.type === 'video'));
+                        return res.status(200).json({
+                            success: true, data: results.all.filter(item => item.type === 'video')
+                        });
+                    } else {
+                        return res.status(404).json({success: false});
+                    }
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({success: false});
+                })
+        }
+    } catch (error) {
+        res.status(500).send(error);
         webhook(`\`\`\`js\n${error}\`\`\``);
     }
 }
