@@ -43,6 +43,7 @@ exports.signin = async (req, res, next) => {
 // get all users except current user from database for chat purpose
 exports.getAllusers = async (req, res, next) => {
     try {
+        console.log(req.body)
         const users = await User.find({ _id: { $ne: req.params.id } }).select([
             'email',
             'userName',
@@ -51,7 +52,7 @@ exports.getAllusers = async (req, res, next) => {
         ]);
         return res.status(200).json(users)
     } catch (error) {
-        webhook(`\`\`\`js\n${err}\`\`\``);
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
     }
 }
