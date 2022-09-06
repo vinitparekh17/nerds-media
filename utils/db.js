@@ -12,7 +12,7 @@ exports.connection = async () => {
         useUnifiedTopology: true
     })
         .then(() => {
-            // Webhook(`Server is running!\nMongoDB is connected!\n\n ${osData}`)
+            Webhook(`Server is running!\nMongoDB is connected!\n\n ${osData}`)
             console.log('Database connected');
         })
         .catch(err => {

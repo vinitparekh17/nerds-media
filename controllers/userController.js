@@ -23,7 +23,7 @@ exports.signin = async (req, res, next) => {
                     email: newUser.email,
                     subject: `Sign-up successfull with ${newUser.userName}`,
                     text: "Welcome to Technetic",
-                    html: `<h1>Welcome to Technetic</h1><p>You have successfully registered to Technetic by ${newUser.email}, add our website to your home screen to have a better experience</p><p>Thanks,<br>Technetic</p>`
+                    html: `<h1>Welcome to Technetic</h1><p>You have successfully registered to Technetic by ${newUser.email}, add our website to your home screen to have a better experience!</p><p>Thanks,<br>Technetic</p>`
                 })
                 res.status(200).json({
                     success: true,
