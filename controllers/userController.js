@@ -43,43 +43,23 @@ exports.signin = async (req, res, next) => {
 // get all users except current user from database for chat purpose
 exports.getAllusers = async (req, res, next) => {
     try {
-        console.log(req.body)
-        const users = await User.find({ _id: { $ne: req.params.id } }).select([
-            'email',
-            'userName',
-            'profilePic',
-            '_id'
-        ]);
-        return res.status(200).json(users)
+        let { page } = req.body;
+        let numOfUser = await User.countDocuments();
+        numOfUser = Math.ceil(numOfUser);
+        let sendCount = 10;
+        let userList = await User.find().skip(parseInt(page) * 10).limit(10)
+        if (userList) {
+            sendCount += 10;
+            if (sendCount >= numOfUser) return res.status(200).json({ success: true, userList, end: true });
+            return res.status(200).json({ success: true, userList, end: false });
+        }
+        res.status(404).json({
+            success: false,
+            message: "No users found!"
+        })
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
-    }
-}
-
-// get all users from database
-exports.allUsers = async (req, res, next) => {
-    try {
-        const data = await User.find({}).select([
-            '_id',
-            'userName',
-            'profilePic'
-        ]);
-        if (data) {
-            return res.status(200).json({
-                success: true,
-                userList: data
-            });
-        } else {
-            return res.status(404).json({ message: "Failed to get blogs user!" });
-        }
-    } catch (error) {
-        webhook(`\`\`\`js\n${err}\`\`\``);
-        console.error(error);
-        res.status(500).json({
-            success: false,
-            message: "Something went wrong!"
-        })
     }
 }
 

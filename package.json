@@ -20,6 +20,7 @@
     "yt-search": "^2.10.3"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   }
 }
