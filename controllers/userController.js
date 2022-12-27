@@ -47,7 +47,7 @@ exports.getAllusers = async (req, res, next) => {
         let numOfUser = await User.countDocuments();
         numOfUser = Math.ceil(numOfUser);
         let sendCount = 10;
-        let userList = await User.find().skip(parseInt(page) * 10).limit(10)
+        let userList = await User.find().skip((parseInt(page) - 1) * 10).limit(10)
         if (userList) {
             sendCount += 10;
             if (sendCount >= numOfUser) return res.status(200).json({ success: true, userList, end: true });
