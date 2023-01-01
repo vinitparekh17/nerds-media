@@ -62,7 +62,8 @@ exports.getAllusers = async (req, res, next) => {
                 success: true,
                 message: "Users fetched successfully!",
                 userList,
-                numOfUser
+                numOfUser,
+                end: page * 10 >= numOfUser ? true : false
             })
         }
     } catch (error) {
