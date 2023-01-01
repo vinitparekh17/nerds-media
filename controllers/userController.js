@@ -51,9 +51,9 @@ exports.getAllusers = async (req, res, next) => {
 
         // if page is 1 then send 10 users else send 10 users from page * 10
         if (page === 1) {
-            userList = await User.find({ _id: { $ne: id } }).select(['_id', 'userName', 'profilePic']).limit(10);
+            userList = await User.find().select(['_id', 'userName', 'profilePic']).limit(10);
         } else {
-            userList = await User.find({ _id: { $ne: id } }).select(['_id', 'userName', 'profilePic']).skip((page - 1) * 10).limit(10);
+            userList = await User.find().select(['_id', 'userName', 'profilePic']).skip((page - 1) * 10).limit(10);
         }
 
         // if user list is not empty then send user list
