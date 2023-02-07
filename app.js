@@ -37,12 +37,12 @@ const message = require('./routes/messages');
 const blog = require('./routes/blog');
 const study = require('./routes/study');
 const code = require('./routes/code');
+const admin = require('./routes/admin');
 
 //cors
 app.use(
     cors({
-        // origin: "http://localhost:3000",
-        origin: "https://www.technetic.co.in",
+        origin: ["http://localhost:3000", "https://technetic.co.in", "https://admin.technetic.co.in"],
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
@@ -54,5 +54,6 @@ app.use('/api', message)
 app.use('/api', blog)
 app.use('/api', study)
 app.use('/api', code)
+app.use('/api', admin)
 
 module.exports = app;

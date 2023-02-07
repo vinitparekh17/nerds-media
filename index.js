@@ -9,8 +9,8 @@ const PORT = process.env.PORT || 8080;
 const server = app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
 
 // socket.io implementation
-// const origin = 'http://localhost:3000';
-const origin = "https://www.technetic.co.in";
+const origin = ['http://localhost:3000', 'https://www.technetic.co.in', 'https://admin.technetic.co.in'];
+// const origin = "https://www.technetic.co.in";
 const io = socket(server, {
   cors: { origin, credentials: true },
 });
