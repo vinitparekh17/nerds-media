@@ -42,7 +42,7 @@ const admin = require('./routes/admin');
 //cors
 app.use(
     cors({
-        origin: ["http://localhost:3000", "https://technetic.co.in", "https://admin.technetic.co.in"],
+        origin: "*",
         methods: "GET,POST,PUT,DELETE",
         credentials: true,
     })
