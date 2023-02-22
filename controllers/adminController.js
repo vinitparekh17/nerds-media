@@ -1,3 +1,4 @@
+const { isValidObjectId } = require("mongoose")
 const User = require('../models/userModel');
 const Blog = require('../models/blogModel');
 const Code = require('../models/codeModel');
@@ -54,6 +55,183 @@ exports.getFiles = async (req, res) => {
             results: Files.length,
             data: Files
         })
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+exports.getUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(id && isValidObjectId(id)) {
+        const oneUser = await User.findById(id);
+        res.status(200).json({
+            status: 'success',
+            data: oneUser
+        })
+    }
+    } catch (error) {
+        // Webhook(error)
+        console.log("error");
+    }
+}
+
+exports.getBlogsById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(id && isValidObjectId(id)) {
+        const oneBlog = await Blog.findById(id);
+        return res.status(200).json({
+            status: 'success',
+            data: oneBlog
+        })
+    }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+exports.getFilesById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(id && isValidObjectId(id)) {
+        const oneFile = await Study.findById(id);
+        return res.status(200).json({
+            status: 'success',
+            data: oneFile
+        })
+    }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+exports.getCodesById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if(id && isValidObjectId(id)) {
+        const oneCode = await Code.findById(id);
+        return res.status(200).json({
+            status: 'success',
+            data: oneCode
+        })
+    }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+// delete methods
+exports.deleteUser = async (req, res) => {
+    try {
+        let { id } = req.params;
+        if(id && isValidObjectId(id)) {
+            const deletedUser = await User.findByIdAndDelete(id);
+            res.status(200).json({
+                status: 'success',
+                data: deletedUser
+            })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+// same for blogs, codes and files
+exports.deleteBlog = async (req, res) => {
+    try {
+        let { id } = req.params;
+        if(id && isValidObjectId(id)) {
+            const deletedBlog = await Blog.findByIdAndDelete(id);
+            res.status(200).json({
+                status: 'success',
+                data: deletedBlog
+            })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+exports.deleteCode = async (req, res) => {
+    try {
+        let { id } = req.params;
+        if(id && isValidObjectId(id)) {
+            const deletedCode = await Code.findByIdAndDelete(id);
+            res.status(200).json({
+                status: 'success',
+                data: deletedCode
+            })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+exports.deleteFile = async (req, res) => {
+    try {
+        let { id } = req.params;
+        if(id && isValidObjectId(id)) {
+            const deletedFile = await Study.findByIdAndDelete(id);
+            res.status(200).json({
+                status: 'success',
+                data: deletedFile
+            })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+// update methods
+exports.updateUser = async (req, res) => {
+    try {
+        let { data, id } = req.body;
+        if(id && isValidObjectId(id)) {
+        let updatedUser = await User.findByIdAndUpdate(id,data,{ new: true })
+        res.status(200).json({
+            status: 'success',
+            data: updatedUser
+        })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+exports.updateBlog = async (req, res) => {
+    try {
+        let { data, id } = req.body;
+        if(id && isValidObjectId(id)) {
+            let updatedBlog = await Blog.findByIdAndUpdate(id,data,{ new: true })
+            res.status(200).json({
+                status: 'success',
+                data: updatedBlog
+            })
+        }
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+    }
+}
+
+exports.updateCode = async (req, res) => {
+    try {
+        let { data, id } = req.body;
+        if(id && isValidObjectId(id)) {
+            let updatedCode = await Code.findByIdAndUpdate(id,data,{ new: true })
+            res.status(200).json({
+                status: 'success',
+                data: updatedCode
+            })
+        }
     } catch (error) {
         Webhook(error)
         console.log(error);

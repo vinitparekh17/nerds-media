@@ -2,7 +2,6 @@ const User = require("../models/userModel")
 const Blog = require("../models/blogModel")
 const mailer = require('../utils/nodeMailer');
 const webhook = require("../utils/webhook");
-const { default: mongoose } = require("mongoose");
 
 // get current user details from database for authentication
 exports.signin = async (req, res, next) => {
@@ -106,7 +105,8 @@ exports.getUser = async (req, res) => {
             '_id',
             'userName',
             'profilePic',
-            'email'
+            'email',
+            'role'
         ]);
         if (user) {
             return res.json({
