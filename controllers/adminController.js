@@ -64,13 +64,13 @@ exports.getFiles = async (req, res) => {
 exports.getUserById = async (req, res) => {
     try {
         const { id } = req.params;
-        if(id && isValidObjectId(id)) {
-        const oneUser = await User.findById(id);
-        res.status(200).json({
-            status: 'success',
-            data: oneUser
-        })
-    }
+        if (id && isValidObjectId(id)) {
+            const oneUser = await User.findById(id);
+            res.status(200).json({
+                status: 'success',
+                data: oneUser
+            })
+        }
     } catch (error) {
         // Webhook(error)
         console.log("error");
@@ -80,13 +80,13 @@ exports.getUserById = async (req, res) => {
 exports.getBlogsById = async (req, res) => {
     try {
         const { id } = req.params;
-        if(id && isValidObjectId(id)) {
-        const oneBlog = await Blog.findById(id);
-        return res.status(200).json({
-            status: 'success',
-            data: oneBlog
-        })
-    }
+        if (id && isValidObjectId(id)) {
+            const oneBlog = await Blog.findById(id);
+            return res.status(200).json({
+                status: 'success',
+                data: oneBlog
+            })
+        }
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -95,13 +95,13 @@ exports.getBlogsById = async (req, res) => {
 exports.getFilesById = async (req, res) => {
     try {
         const { id } = req.params;
-        if(id && isValidObjectId(id)) {
-        const oneFile = await Study.findById(id);
-        return res.status(200).json({
-            status: 'success',
-            data: oneFile
-        })
-    }
+        if (id && isValidObjectId(id)) {
+            const oneFile = await Study.findById(id);
+            return res.status(200).json({
+                status: 'success',
+                data: oneFile
+            })
+        }
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -110,13 +110,13 @@ exports.getFilesById = async (req, res) => {
 exports.getCodesById = async (req, res) => {
     try {
         const { id } = req.params;
-        if(id && isValidObjectId(id)) {
-        const oneCode = await Code.findById(id);
-        return res.status(200).json({
-            status: 'success',
-            data: oneCode
-        })
-    }
+        if (id && isValidObjectId(id)) {
+            const oneCode = await Code.findById(id);
+            return res.status(200).json({
+                status: 'success',
+                data: oneCode
+            })
+        }
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -127,7 +127,7 @@ exports.getCodesById = async (req, res) => {
 exports.deleteUser = async (req, res) => {
     try {
         let { id } = req.params;
-        if(id && isValidObjectId(id)) {
+        if (id && isValidObjectId(id)) {
             const deletedUser = await User.findByIdAndDelete(id);
             res.status(200).json({
                 status: 'success',
@@ -144,7 +144,7 @@ exports.deleteUser = async (req, res) => {
 exports.deleteBlog = async (req, res) => {
     try {
         let { id } = req.params;
-        if(id && isValidObjectId(id)) {
+        if (id && isValidObjectId(id)) {
             const deletedBlog = await Blog.findByIdAndDelete(id);
             res.status(200).json({
                 status: 'success',
@@ -160,7 +160,7 @@ exports.deleteBlog = async (req, res) => {
 exports.deleteCode = async (req, res) => {
     try {
         let { id } = req.params;
-        if(id && isValidObjectId(id)) {
+        if (id && isValidObjectId(id)) {
             const deletedCode = await Code.findByIdAndDelete(id);
             res.status(200).json({
                 status: 'success',
@@ -176,7 +176,7 @@ exports.deleteCode = async (req, res) => {
 exports.deleteFile = async (req, res) => {
     try {
         let { id } = req.params;
-        if(id && isValidObjectId(id)) {
+        if (id && isValidObjectId(id)) {
             const deletedFile = await Study.findByIdAndDelete(id);
             res.status(200).json({
                 status: 'success',
@@ -189,31 +189,15 @@ exports.deleteFile = async (req, res) => {
     }
 }
 
-// update methods
-exports.updateUser = async (req, res) => {
-    try {
-        let { data, id } = req.body;
-        if(id && isValidObjectId(id)) {
-        let updatedUser = await User.findByIdAndUpdate(id,data,{ new: true })
-        res.status(200).json({
-            status: 'success',
-            data: updatedUser
-        })
-        }
-    } catch (error) {
-        Webhook(error)
-        console.log(error);
-    }
-}
 
 exports.updateBlog = async (req, res) => {
     try {
-        let { data, id } = req.body;
-        if(id && isValidObjectId(id)) {
-            let updatedBlog = await Blog.findByIdAndUpdate(id,data,{ new: true })
+        let { id } = req.params;
+        let { data } = req.body;
+        if (id && isValidObjectId(id)) {
+            await Blog.findByIdAndUpdate(id, data)
             res.status(200).json({
-                status: 'success',
-                data: updatedBlog
+                status: 'success'
             })
         }
     } catch (error) {
@@ -224,12 +208,41 @@ exports.updateBlog = async (req, res) => {
 
 exports.updateCode = async (req, res) => {
     try {
-        let { data, id } = req.body;
-        if(id && isValidObjectId(id)) {
-            let updatedCode = await Code.findByIdAndUpdate(id,data,{ new: true })
+        let { id } = req.params;
+        let newData = req.body;
+        if (id && isValidObjectId(id)) {
+            let oldData = await Code.findById(id);
+            let keys = Object.keys(newData);
+            if (newData !== oldData) {
+                keys.forEach(key => {
+                    if (newData[key] !== oldData[key]) {
+                        oldData[key] = newData[key];
+                    }
+                })
+                await oldData.save()
+                res.status(200).json({
+                    status: 'success'
+                })
+            }
+        }
+    } catch (error) {
+        // Webhook(error)
+        res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
+        console.log(error);
+    }
+}
+
+exports.updateFile = async (req, res) => {
+    try {
+        let { id } = req.params;
+        let { data } = req.body;
+        if (id && isValidObjectId(id)) {
+            await Study.findByIdAndUpdate(id, data, { new: true })
             res.status(200).json({
-                status: 'success',
-                data: updatedCode
+                status: 'success'
             })
         }
     } catch (error) {

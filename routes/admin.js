@@ -12,6 +12,9 @@ const {
     deleteBlog,
     deleteCode,
     deleteFile,
+    updateBlog,
+    updateCode,
+    updateFile,
 } = require("../controllers/adminController");
 
 router.route("/admin/getuser").get(getUsers);
@@ -28,5 +31,9 @@ router.route("/admin/deleteuser/:id").delete(deleteUser);
 router.route("/admin/deleteblog/:id").delete(deleteBlog);
 router.route("/admin/deletecode/:id").delete(deleteCode);
 router.route("/admin/deletefile/:id").delete(deleteFile);
+
+router.route("/admin/updateblog/:id").put(updateBlog);
+router.route("/admin/updatecode/:id").put(updateCode);
+router.route("/admin/updatefile/:id").put(updateFile);
 
 module.exports = router;
