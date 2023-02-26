@@ -1,7 +1,5 @@
 const app = require("./app");
 
-const userModel = require("./models/userModel");
-
 //socket.io implementation
 const socket = require("socket.io");
 
