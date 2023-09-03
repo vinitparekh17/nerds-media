@@ -1,5 +1,4 @@
 const express = require('express');
-const session = require('express-session');
 const cors = require('cors')
 const app = express();
 
@@ -38,6 +37,7 @@ const blog = require('./routes/blog');
 const study = require('./routes/study');
 const code = require('./routes/code');
 const admin = require('./routes/admin');
+const payment = require('./routes/payment');
 
 //cors
 app.use(
@@ -55,5 +55,6 @@ app.use('/api', blog)
 app.use('/api', study)
 app.use('/api', code)
 app.use('/api', admin)
+app.use('/api', payment)
 
 module.exports = app;
