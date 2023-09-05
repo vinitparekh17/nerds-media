@@ -1,5 +1,6 @@
 const Razorpay = require('razorpay');
-const User = require('../models/userModel');
+const mailer = require('../utils/nodeMailer');
+const Payment = require('../models/paymentModel');
 const Webhook = require('../utils/webhook');
 const { RAZOR_ID, RAZOR_SECRET } = process.env;
 
@@ -45,7 +46,35 @@ exports.getPaymentToken = async (req, res) => {
 
 exports.savePayment = async (req, res) => {
     try {
-        
+        const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = req.body;
+        const { id } = req.query;
+
+        RazorClient.payments.fetch(razorpay_payment_id, async (err, payment) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({
+                    status: 'error',
+                    message: err.message
+                })
+            }
+
+            const { email, name } = payment.notes;
+            await mailer({
+                email,
+                subject: `Payment Successfull | Technetic`,
+                text: `Hi ${name}, your payment of ₹${payment.amount / 100} has been successfully received.`
+            })
+            const newPayment = new Payment({
+                razorpay_payment_id,
+                razorpay_order_id,
+                razorpay_signature,
+                userId: id
+            })
+            await newPayment.save();
+            return res.status(201).json({
+                status: 'success',
+            })
+        })
     } catch (error) {
         Webhook(error)
         return res.status(500).json({

@@ -8,7 +8,7 @@ const Webhook = require('../utils/webhook')
 exports.getUsers = async (req, res) => {
     try {
         const Users = await User.find();
-        res.status(200).json({
+        return res.status(200).json({
             status: 'success',
             results: Users.length,
             data: Users
@@ -22,7 +22,7 @@ exports.getUsers = async (req, res) => {
 exports.getBlogs = async (req, res) => {
     try {
         const Blogs = await Blog.find();
-        res.status(200).json({
+        return res.status(200).json({
             status: 'success',
             results: Blogs.length,
             data: Blogs
@@ -36,7 +36,7 @@ exports.getBlogs = async (req, res) => {
 exports.getCodes = async (req, res) => {
     try {
         const Codes = await Code.find();
-        res.status(200).json({
+        return res.status(200).json({
             status: 'success',
             results: Codes.length,
             data: Codes
@@ -50,7 +50,7 @@ exports.getCodes = async (req, res) => {
 exports.getFiles = async (req, res) => {
     try {
         const Files = await Study.find();
-        res.status(200).json({
+        return res.status(200).json({
             status: 'success',
             results: Files.length,
             data: Files
@@ -58,6 +58,10 @@ exports.getFiles = async (req, res) => {
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -72,8 +76,12 @@ exports.getUserById = async (req, res) => {
             })
         }
     } catch (error) {
-        // Webhook(error)
+        Webhook(error)
         console.log("error");
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -87,6 +95,10 @@ exports.getBlogsById = async (req, res) => {
                 data: oneBlog
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -102,6 +114,10 @@ exports.getFilesById = async (req, res) => {
                 data: oneFile
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -117,6 +133,10 @@ exports.getCodesById = async (req, res) => {
                 data: oneCode
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -129,11 +149,14 @@ exports.deleteUser = async (req, res) => {
         let { id } = req.params;
         if (id && isValidObjectId(id)) {
             const deletedUser = await User.findByIdAndDelete(id);
-            res.status(200).json({
-                status: 'success',
-                data: deletedUser
+            return res.status(200).json({
+                status: 'success'
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
@@ -145,15 +168,22 @@ exports.deleteBlog = async (req, res) => {
     try {
         let { id } = req.params;
         if (id && isValidObjectId(id)) {
-            const deletedBlog = await Blog.findByIdAndDelete(id);
-            res.status(200).json({
-                status: 'success',
-                data: deletedBlog
+            await Blog.findByIdAndDelete(id);
+            return res.status(200).json({
+                status: 'success'
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -162,14 +192,22 @@ exports.deleteCode = async (req, res) => {
         let { id } = req.params;
         if (id && isValidObjectId(id)) {
             const deletedCode = await Code.findByIdAndDelete(id);
-            res.status(200).json({
+            return res.status(200).json({
                 status: 'success',
                 data: deletedCode
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -178,14 +216,21 @@ exports.deleteFile = async (req, res) => {
         let { id } = req.params;
         if (id && isValidObjectId(id)) {
             const deletedFile = await Study.findByIdAndDelete(id);
-            res.status(200).json({
-                status: 'success',
-                data: deletedFile
+            return res.status(200).json({
+                status: 'success'
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -203,6 +248,10 @@ exports.updateBlog = async (req, res) => {
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
 
@@ -226,12 +275,11 @@ exports.updateCode = async (req, res) => {
             }
         }
     } catch (error) {
-        // Webhook(error)
-        res.status(500).json({
+        Webhook(error)
+        return res.status(500).json({
             success: false,
             message: "internal server error"
         })
-        console.log(error);
     }
 }
 
@@ -240,13 +288,45 @@ exports.updateFile = async (req, res) => {
         let { id } = req.params;
         let { data } = req.body;
         if (id && isValidObjectId(id)) {
-            await Study.findByIdAndUpdate(id, data, { new: true })
-            res.status(200).json({
+            await Study.findByIdAndUpdate(id, data)
+            return res.status(200).json({
                 status: 'success'
             })
         }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
     } catch (error) {
         Webhook(error)
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
+    }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { data } = req.body;
+        if (id && isValidObjectId(id)) {
+            await User.findByIdAndUpdate(id, data)
+            return res.status(200).json({
+                status: 'success'
+            })
+        }
+        return res.status(400).json({
+            status: 'failed',
+            message: 'id is invalid'
+        })
+    } catch (error) {
+        Webhook(error)
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "internal server error"
+        })
     }
 }
