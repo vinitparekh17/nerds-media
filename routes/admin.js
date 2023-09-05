@@ -15,6 +15,7 @@ const {
     updateBlog,
     updateCode,
     updateFile,
+    updateUser
 } = require("../controllers/adminController");
 
 router.route("/admin/getuser").get(getUsers);
@@ -32,6 +33,7 @@ router.route("/admin/deleteblog/:id").delete(deleteBlog);
 router.route("/admin/deletecode/:id").delete(deleteCode);
 router.route("/admin/deletefile/:id").delete(deleteFile);
 
+router.route("/admin/updateuser/:id").put(updateUser);
 router.route("/admin/updateblog/:id").put(updateBlog);
 router.route("/admin/updatecode/:id").put(updateCode);
 router.route("/admin/updatefile/:id").put(updateFile);
