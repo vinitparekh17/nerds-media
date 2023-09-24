@@ -7,10 +7,10 @@ const {
     reportCode
 } = require('../controllers/codeController');
 
-router.route('/addcode').post(postCode);
-router.route('/deletecode').post(deleteCode);
 router.route('/showcodes').get(getCode);
-router.route('/updatecode').post(updateCode);
-router.route('/reportcode').post(reportCode);
+router.route('/reportcode').get(reportCode);
+router.route('/addcode').post(postCode);
+router.route('/deletecode').delete(deleteCode);
+router.route('/updatecode').put(updateCode);
 
 module.exports = router;

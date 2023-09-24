@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const { uploadFile, getFiles, getFilesBySubject, deleteFile, sendOldFiles, reportFile } = require('../controllers/studyController')
 
-router.route('/uploadFile').post(uploadFile)
 router.route('/getFiles').get(getFiles)
-router.route('/deletefile').post(deleteFile)
-router.route('/reportfile').post(reportFile)
+router.route('/reportfile').get(reportFile)
 router.route('/sendOldFiles').get(sendOldFiles)
+router.route('/uploadFile').post(uploadFile)
+router.route('/deletefile').delete(deleteFile)
 
 module.exports = router;

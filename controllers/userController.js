@@ -1,7 +1,11 @@
-const User = require("../models/userModel")
-const Blog = require("../models/blogModel")
+const User = require("../models/userModel");
+const { isValidObjectId } = require("mongoose");
+const Blog = require("../models/blogModel");
+const Code = require("../models/codeModel");
+const File = require("../models/studyModel");
 const mailer = require('../utils/nodeMailer');
 const webhook = require("../utils/webhook");
+const Webhook = require("../utils/webhook");
 
 // get current user details from database for authentication
 exports.signin = async (req, res, next) => {
@@ -10,7 +14,7 @@ exports.signin = async (req, res, next) => {
         const existUser = await User.findOne({ email })
 
         if (existUser) {
-            res.status(200).json({
+            return res.status(200).json({
                 success: true,
                 message: "User already exists!",
                 user: existUser
@@ -26,7 +30,7 @@ exports.signin = async (req, res, next) => {
                     text: "Welcome to Technetic",
                     html: `<h1>Welcome to Technetic</h1><p>You have successfully registered to Technetic by ${newUser.email}, add our website to your home screen to have a better experience!</p><p>Thanks,<br>Technetic</p>`
                 })
-                res.status(200).json({
+                return res.status(200).json({
                     success: true,
                     message: "User created successfully!",
                     user: newUser
@@ -36,7 +40,11 @@ exports.signin = async (req, res, next) => {
 
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);;
-        console.log(error)
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
     }
 }
 
@@ -70,6 +78,10 @@ exports.getAllusers = async (req, res, next) => {
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
     }
 }
 
@@ -96,6 +108,10 @@ exports.blogUser = async (req, res) => {
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
     }
 }
 
@@ -119,7 +135,7 @@ exports.getUser = async (req, res) => {
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);;
         console.error(error);
-        res.status(500).json({
+        return res.status(500).json({
             success: false,
             message: "Something went wrong!"
         })
@@ -159,6 +175,10 @@ exports.messMail = async (req, res, next) => {
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
     }
 }
 
@@ -186,5 +206,32 @@ exports.mailUser = async (req, res, next) => {
     } catch (error) {
         webhook(`\`\`\`js\n${error}\`\`\``);;
         console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    try {
+        // delete user by id and all blogs, codes, files of that user
+        const { id } = req.params;
+        if(!isValidObjectId(id)) return res.status(404).json({ message: "User not found!" });
+        await User.deleteOne({ _id: id });
+        await Blog.deleteMany({ userId: id });
+        await Code.deleteMany({ userId: id });
+        await File.deleteMany({ userId: id });
+        return res.json({
+            success: true,
+            message: "User deleted successfully!"
+        });
+    } catch (error) {
+        Webhook(`\`\`\`js\n${error}\`\`\``);
+        console.error(error);
+        return res.status(500).json({
+            success: false,
+            message: "Something went wrong!"
+        })
     }
 }

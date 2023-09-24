@@ -1,8 +1,10 @@
+const { isValidObjectId } = require('mongoose');
 const Blog = require('../models/blogModel');
+const User = require('../models/userModel');
 const webhook = require('../utils/webhook');
 const yt = require('yt-search');
 
-exports.addBlog = async (req, res, next) => {
+exports.addBlog = async (req, res) => {
     const { title, content, userId, image } = req.body;
     const blog = new Blog({
         title,
@@ -28,7 +30,7 @@ exports.addBlog = async (req, res, next) => {
 
 exports.deleteBlog = async (req, res, next) => {
     try {
-        const data = await Blog.deleteOne({ _id: req.body.id });
+        const data = await Blog.deleteOne({ _id: req.params.id });
         if (data) {
             return res.status(200).json({
                 success: true,
@@ -99,6 +101,22 @@ exports.updateBlog = async (req, res, next) => {
     }
 }
 
+exports.getBlogById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        if (isValidObjectId(id)) {
+            const data = await Blog.findById(id);
+            const blogUser = await User.findById(data.userId);
+            return res.json({ success: true, data, blogUser });
+        } else {
+            return res.status(404).json({ message: "Invalid id" });
+        }
+    } catch (error) {
+        webhook(`\`\`\`js\n${error}\`\`\``);;
+        console.log(error);
+    }
+}
+
 exports.Search = (req, res) => {
     try {
         const { query } = req.body;
@@ -111,12 +129,12 @@ exports.Search = (req, res) => {
                             success: true, data: results.all.filter(item => item.type === 'video')
                         });
                     } else {
-                        return res.status(404).json({success: false});
+                        return res.status(404).json({ success: false });
                     }
                 })
                 .catch(err => {
                     console.log(err);
-                    return res.status(500).json({success: false});
+                    return res.status(500).json({ success: false });
                 })
         }
     } catch (error) {
