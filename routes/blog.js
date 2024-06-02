@@ -1,5 +1,13 @@
-const router = require("express").Router();
-const { addBlog, deleteBlog, showBlogs, reportBlog, updateBlog, getBlogById ,Search } = require('../controllers/blogsController')
+const router = require('express').Router();
+const {
+    addBlog,
+    deleteBlog,
+    showBlogs,
+    reportBlog,
+    updateBlog,
+    getBlogById,
+    Search,
+} = require('../controllers/blogsController');
 
 router.route('/addblog').post(addBlog);
 router.route('/deleteblog').delete(deleteBlog);

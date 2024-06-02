@@ -1,10 +1,9 @@
-const { mem, cpu, drive, os } = require("node-os-utils");
-const Webhook = require("./webhook");
+const { mem, cpu, drive, os } = require('node-os-utils');
+const Webhook = require('./webhook');
 
 const Logger = async () => {
     try {
         function msToTime(s) {
-
             // Pad to 2 or 3 digits, default is 2
             function pad(n, z) {
                 z = z || 2;
@@ -17,7 +16,9 @@ const Logger = async () => {
             var mins = s % 60;
             var hrs = (s - mins) / 60;
 
-            return pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3);
+            return (
+                pad(hrs) + ':' + pad(mins) + ':' + pad(secs) + '.' + pad(ms, 3)
+            );
         }
 
         const count = await cpu.count();
@@ -27,7 +28,7 @@ const Logger = async () => {
         const uptime = await os.uptime();
         const hostName = await os.hostname();
         const osType = await os.type();
-        
+
         return `**Server information**\n\`\`\`bash\n
 CPU Count: ${count} cores
 CPU Usage: ${cpuUsage} %
@@ -37,10 +38,10 @@ Free RAM: ${(memoryInfo.freeMemMb / 1024).toFixed(2)} GB
 Used RAM: ${(memoryInfo.usedMemMb / 1024).toFixed(2)} GB
 Uptime: ${msToTime(uptime)}
 Hostname: ${hostName}
-OS Type: ${osType}\`\`\``
+OS Type: ${osType}\`\`\``;
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 module.exports = Logger;

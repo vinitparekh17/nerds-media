@@ -1,9 +1,9 @@
-const { isValidObjectId } = require("mongoose")
+const { isValidObjectId } = require('mongoose');
 const User = require('../models/userModel');
 const Blog = require('../models/blogModel');
 const Code = require('../models/codeModel');
 const Study = require('../models/studyModel');
-const Webhook = require('../utils/webhook')
+const Webhook = require('../utils/webhook');
 
 exports.getUsers = async (req, res) => {
     try {
@@ -11,13 +11,13 @@ exports.getUsers = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             results: Users.length,
-            data: Users
-        })
+            data: Users,
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 
 exports.getBlogs = async (req, res) => {
     try {
@@ -25,13 +25,13 @@ exports.getBlogs = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             results: Blogs.length,
-            data: Blogs
-        })
+            data: Blogs,
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 
 exports.getCodes = async (req, res) => {
     try {
@@ -39,13 +39,13 @@ exports.getCodes = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             results: Codes.length,
-            data: Codes
-        })
+            data: Codes,
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 
 exports.getFiles = async (req, res) => {
     try {
@@ -53,17 +53,17 @@ exports.getFiles = async (req, res) => {
         return res.status(200).json({
             status: 'success',
             results: Files.length,
-            data: Files
-        })
+            data: Files,
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.getUserById = async (req, res) => {
     try {
@@ -72,18 +72,18 @@ exports.getUserById = async (req, res) => {
             const oneUser = await User.findById(id);
             res.status(200).json({
                 status: 'success',
-                data: oneUser
-            })
+                data: oneUser,
+            });
         }
     } catch (error) {
-        Webhook(error)
-        console.log("error");
+        Webhook(error);
+        console.log('error');
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.getBlogsById = async (req, res) => {
     try {
@@ -92,18 +92,18 @@ exports.getBlogsById = async (req, res) => {
             const oneBlog = await Blog.findById(id);
             return res.status(200).json({
                 status: 'success',
-                data: oneBlog
-            })
+                data: oneBlog,
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 exports.getFilesById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -111,18 +111,18 @@ exports.getFilesById = async (req, res) => {
             const oneFile = await Study.findById(id);
             return res.status(200).json({
                 status: 'success',
-                data: oneFile
-            })
+                data: oneFile,
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 exports.getCodesById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -130,18 +130,18 @@ exports.getCodesById = async (req, res) => {
             const oneCode = await Code.findById(id);
             return res.status(200).json({
                 status: 'success',
-                data: oneCode
-            })
+                data: oneCode,
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 
 // delete methods
 exports.deleteUser = async (req, res) => {
@@ -150,18 +150,18 @@ exports.deleteUser = async (req, res) => {
         if (id && isValidObjectId(id)) {
             const deletedUser = await User.findByIdAndDelete(id);
             return res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
     }
-}
+};
 
 // same for blogs, codes and files
 exports.deleteBlog = async (req, res) => {
@@ -170,22 +170,22 @@ exports.deleteBlog = async (req, res) => {
         if (id && isValidObjectId(id)) {
             await Blog.findByIdAndDelete(id);
             return res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.deleteCode = async (req, res) => {
     try {
@@ -194,22 +194,22 @@ exports.deleteCode = async (req, res) => {
             const deletedCode = await Code.findByIdAndDelete(id);
             return res.status(200).json({
                 status: 'success',
-                data: deletedCode
-            })
+                data: deletedCode,
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.deleteFile = async (req, res) => {
     try {
@@ -217,43 +217,42 @@ exports.deleteFile = async (req, res) => {
         if (id && isValidObjectId(id)) {
             const deletedFile = await Study.findByIdAndDelete(id);
             return res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
-
+};
 
 exports.updateBlog = async (req, res) => {
     try {
         let { id } = req.params;
         let { data } = req.body;
         if (id && isValidObjectId(id)) {
-            await Blog.findByIdAndUpdate(id, data)
+            await Blog.findByIdAndUpdate(id, data);
             res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.updateCode = async (req, res) => {
     try {
@@ -263,70 +262,70 @@ exports.updateCode = async (req, res) => {
             let oldData = await Code.findById(id);
             let keys = Object.keys(newData);
             if (newData !== oldData) {
-                keys.forEach(key => {
+                keys.forEach((key) => {
                     if (newData[key] !== oldData[key]) {
                         oldData[key] = newData[key];
                     }
-                })
-                await oldData.save()
+                });
+                await oldData.save();
                 res.status(200).json({
-                    status: 'success'
-                })
+                    status: 'success',
+                });
             }
         }
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.updateFile = async (req, res) => {
     try {
         let { id } = req.params;
         let { data } = req.body;
         if (id && isValidObjectId(id)) {
-            await Study.findByIdAndUpdate(id, data)
+            await Study.findByIdAndUpdate(id, data);
             return res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};
 
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
         const { data } = req.body;
         if (id && isValidObjectId(id)) {
-            await User.findByIdAndUpdate(id, data)
+            await User.findByIdAndUpdate(id, data);
             return res.status(200).json({
-                status: 'success'
-            })
+                status: 'success',
+            });
         }
         return res.status(400).json({
             status: 'failed',
-            message: 'id is invalid'
-        })
+            message: 'id is invalid',
+        });
     } catch (error) {
-        Webhook(error)
+        Webhook(error);
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "internal server error"
-        })
+            message: 'internal server error',
+        });
     }
-}
+};

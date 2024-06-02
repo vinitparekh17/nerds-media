@@ -6,103 +6,139 @@ exports.uploadFile = async (req, res, next) => {
         const data = await StudyModel.create(req.body);
 
         if (data) {
-            return res.status(200).json({ success: true, message: "File uploaded successfully." });
-        }
-        else {
-            return res.status(404).json({ success: false, message: "Failed to upload file to the database" });
+            return res
+                .status(200)
+                .json({
+                    success: true,
+                    message: 'File uploaded successfully.',
+                });
+        } else {
+            return res
+                .status(404)
+                .json({
+                    success: false,
+                    message: 'Failed to upload file to the database',
+                });
         }
     } catch (error) {
         console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         res.status(500).json({
             success: false,
-            message: "Failed to upload file to the database"
+            message: 'Failed to upload file to the database',
         });
     }
-}
+};
 
 exports.getFiles = async (req, res, next) => {
     try {
         // deleting the files that are older than 5 days
-        const oldFiles = await StudyModel.find({ "createdAt": { $lt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) } });
+        const oldFiles = await StudyModel.find({
+            createdAt: { $lt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) },
+        });
         if (oldFiles) {
-            oldFiles.forEach(async file => {
+            oldFiles.forEach(async (file) => {
                 await file.remove();
-            })
+            });
         }
-        
+
         const data = await StudyModel.find({});
         if (data) {
             return res.status(200).json(data);
-        }
-        else {
-            return res.status(404).json({ message: "Failed to get files from the database" });
+        } else {
+            return res
+                .status(404)
+                .json({ message: 'Failed to get files from the database' });
         }
     } catch (error) {
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
         res.status(500).json({
             success: false,
-            message: "Failed to get files from the database"
+            message: 'Failed to get files from the database',
         });
     }
-}
+};
 
 exports.deleteFile = async (req, res, next) => {
     try {
         const { id } = req.body;
         const data = await StudyModel.findByIdAndDelete(id);
         if (data) {
-            return res.status(200).json({ success: true, message: "File deleted successfully." });
-        }
-        else {
-            return res.status(404).json({ success: false, message: "Failed to delete file from the database" });
+            return res
+                .status(200)
+                .json({ success: true, message: 'File deleted successfully.' });
+        } else {
+            return res
+                .status(404)
+                .json({
+                    success: false,
+                    message: 'Failed to delete file from the database',
+                });
         }
     } catch (error) {
         console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         res.status(500).json({
             success: false,
-            message: "Failed to delete file from the database"
+            message: 'Failed to delete file from the database',
         });
     }
-}
+};
 
 exports.sendOldFiles = async (req, res, next) => {
     try {
-        const data = await StudyModel.find({ "createdAt": { $lt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) } }).select('URL')
+        const data = await StudyModel.find({
+            createdAt: { $lt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) },
+        }).select('URL');
         if (data.length !== 0) {
-            return res.status(200).json({ success: true, message: "Files sent successfully.", data });
-        }
-        else {
-            return res.status(204).json({ success: false, message: "No files to send." });
+            return res
+                .status(200)
+                .json({
+                    success: true,
+                    message: 'Files sent successfully.',
+                    data,
+                });
+        } else {
+            return res
+                .status(204)
+                .json({ success: false, message: 'No files to send.' });
         }
     } catch (error) {
         console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         res.status(500).json({
             success: false,
-            message: "Failed to get files from the database"
+            message: 'Failed to get files from the database',
         });
     }
-}
+};
 
 exports.reportFile = async (req, res, next) => {
     try {
         const { id } = req.body;
         const data = await StudyModel.findByIdAndUpdate(id, { Reported: true });
         if (data) {
-            return res.status(200).json({ success: true, message: "File reported successfully." });
-        }
-        else {
-            return res.status(404).json({ success: false, message: "Failed to report file from the database" });
+            return res
+                .status(200)
+                .json({
+                    success: true,
+                    message: 'File reported successfully.',
+                });
+        } else {
+            return res
+                .status(404)
+                .json({
+                    success: false,
+                    message: 'Failed to report file from the database',
+                });
         }
     } catch (error) {
         console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         res.status(500).json({
             success: false,
-            message: "Failed to report file from the database"
+            message: 'Failed to report file from the database',
         });
     }
-}
+};

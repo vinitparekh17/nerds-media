@@ -1,10 +1,10 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
     postCode,
     deleteCode,
     getCode,
     updateCode,
-    reportCode
+    reportCode,
 } = require('../controllers/codeController');
 
 router.route('/showcodes').get(getCode);

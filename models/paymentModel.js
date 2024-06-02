@@ -1,22 +1,26 @@
-const {Schema, model} = require("mongoose");
+const { Schema, model } = require('mongoose');
 
-const paymentSchema = new Schema({
-    razorpay_payment_id: {
-        type: String,
-        required: true
+const paymentSchema = new Schema(
+    {
+        razorpay_payment_id: {
+            type: String,
+            required: true,
+        },
+        razorpay_order_id: {
+            type: String,
+            required: true,
+        },
+        razorpay_signature: {
+            type: String,
+            required: true,
+        },
+        userId: {
+            type: Schema.Types.ObjectId,
+            ref: 'User',
+            required: true,
+        },
     },
-    razorpay_order_id: {
-        type: String,
-        required: true
-    },
-    razorpay_signature: {
-        type: String,
-        required: true
-    },
-    userId: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    }}, { timestamps: true });
+    { timestamps: true }
+);
 
-module.exports = new model("Payment", paymentSchema);
+module.exports = new model('Payment', paymentSchema);

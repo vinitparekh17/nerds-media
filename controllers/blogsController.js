@@ -10,23 +10,23 @@ exports.addBlog = async (req, res) => {
         title,
         content,
         userId,
-        image
+        image,
     });
     try {
         const data = await blog.save();
         if (data) {
             return res.json({
                 success: true,
-                message: "Blog added successfully."
+                message: 'Blog added successfully.',
             });
         } else {
-            return res.json({ message: "Failed to add blog to the database" });
+            return res.json({ message: 'Failed to add blog to the database' });
         }
     } catch (error) {
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
     }
-}
+};
 
 exports.deleteBlog = async (req, res, next) => {
     try {
@@ -34,23 +34,23 @@ exports.deleteBlog = async (req, res, next) => {
         if (data) {
             return res.status(200).json({
                 success: true,
-                message: "Blog deleted successfully."
+                message: 'Blog deleted successfully.',
             });
         } else {
             return res.status(404).json({
                 success: false,
-                message: "Failed to delete blog from the database"
+                message: 'Failed to delete blog from the database',
             });
         }
     } catch (error) {
         res.status(500).json({
             success: false,
-            message: "Failed to delete blog from the database"
+            message: 'Failed to delete blog from the database',
         });
         console.log(error);
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
     }
-}
+};
 
 exports.showBlogs = async (req, res, next) => {
     try {
@@ -58,48 +58,60 @@ exports.showBlogs = async (req, res, next) => {
         if (data) {
             return res.json({ success: true, data });
         } else {
-            return res.json({ message: "Failed to get blogs from the database" });
+            return res.json({
+                message: 'Failed to get blogs from the database',
+            });
         }
     } catch (error) {
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
     }
-}
+};
 
 exports.reportBlog = async (req, res, next) => {
     try {
-        const data = await Blog.findByIdAndUpdate(req.body.id, { reported: true });
+        const data = await Blog.findByIdAndUpdate(req.body.id, {
+            reported: true,
+        });
         if (data) {
             return res.status(200).json({
                 success: true,
-                message: "Blog reported successfully."
+                message: 'Blog reported successfully.',
             });
         } else {
-            return res.status(404).json({ message: "Failed to report blog from the database" });
+            return res
+                .status(404)
+                .json({ message: 'Failed to report blog from the database' });
         }
     } catch (error) {
         console.log(error);
         webhook(`\`\`\`js\n${error}\`\`\``);
     }
-}
+};
 
 exports.updateBlog = async (req, res, next) => {
     try {
         const { title, content, image } = req.body;
-        const data = await Blog.findByIdAndUpdate(req.body.id, { title, content, image });
+        const data = await Blog.findByIdAndUpdate(req.body.id, {
+            title,
+            content,
+            image,
+        });
         if (data) {
             return res.status(200).json({
                 success: true,
-                message: "Blog updated successfully."
+                message: 'Blog updated successfully.',
             });
         } else {
-            return res.status(404).json({ message: "Failed to update blog from the database" });
+            return res
+                .status(404)
+                .json({ message: 'Failed to update blog from the database' });
         }
     } catch (error) {
         console.log(error);
         webhook(`\`\`\`js\n${error}\`\`\``);
     }
-}
+};
 
 exports.getBlogById = async (req, res) => {
     try {
@@ -109,36 +121,43 @@ exports.getBlogById = async (req, res) => {
             const blogUser = await User.findById(data.userId);
             return res.json({ success: true, data, blogUser });
         } else {
-            return res.status(404).json({ message: "Invalid id" });
+            return res.status(404).json({ message: 'Invalid id' });
         }
     } catch (error) {
-        webhook(`\`\`\`js\n${error}\`\`\``);;
+        webhook(`\`\`\`js\n${error}\`\`\``);
         console.log(error);
     }
-}
+};
 
 exports.Search = (req, res) => {
     try {
         const { query } = req.body;
-        if (query !== "") {
+        if (query !== '') {
             yt.search(query)
-                .then(results => {
+                .then((results) => {
                     if (results.all.length > 0) {
-                        console.log(results.all.filter(result => result.type === 'video'));
+                        console.log(
+                            results.all.filter(
+                                (result) => result.type === 'video'
+                            )
+                        );
                         return res.status(200).json({
-                            success: true, data: results.all.filter(item => item.type === 'video')
+                            success: true,
+                            data: results.all.filter(
+                                (item) => item.type === 'video'
+                            ),
                         });
                     } else {
                         return res.status(404).json({ success: false });
                     }
                 })
-                .catch(err => {
+                .catch((err) => {
                     console.log(err);
                     return res.status(500).json({ success: false });
-                })
+                });
         }
     } catch (error) {
         res.status(500).send(error);
         webhook(`\`\`\`js\n${error}\`\`\``);
     }
-}
+};
