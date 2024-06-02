@@ -1,5 +1,4 @@
-const { mem, cpu, drive, os } = require('node-os-utils');
-const Webhook = require('./webhook');
+const { mem, cpu, os } = require('node-os-utils');
 
 const Logger = async () => {
     try {
